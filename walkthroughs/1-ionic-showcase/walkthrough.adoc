@@ -1,0 +1,339 @@
+:showcase-app-link: https://github.com/aerogear/ionic-showcase
+:integreatly-name: Managed Integration
+:mobile-services-name: Mobile Developer Services
+
+= Building secure, data first mobile app solutions with Mobile Developer Services 
+
+This walkthrough demonstrates how to build and try most of the functionalities offered by {mobile-services-name} 
+
+{mobile-services-name} simplifies mobile and modern application development, leveraging OpenShift's container technology to provide a secure, scalable backend platform. 
+The showcase app that you run in this walkthrough demonstrates:
+
+* building an Ionic Framework and Apache Cordova client side application
+
+* creating a Data Sync service. 
++
+The Data Sync framework allows you create apps that perform real-time data synchronization and have offline capabilities.
+In this walkthrough, you use the showcase app code which allows many users to create and edit a set of Tasks items.
+
+* adding authentication and authorization to your mobile app using the Identity Management service
+
+* monitoring the showcase app using the Mobile Metrics services
++
+This service allows you gather metrics on mobile apps, device versions, device security checks and back-end mobile service usage.
+
+.Deployment
+
+The showcase app includes a Node.js server side application that implements an example GraphQL API and connects to a Postgres database.
+
+image::images/artifacts.png[integration, role="integr8ly-img-responsive"]
+
+[type=walkthroughResource, serviceName=openshift]
+.OpenShift Project
+****
+* link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
+****
+
+[type=walkthroughResource]
+.Mobile Developer Console
+****
+* link:{route-mdc-server-host}[Mobile Developer Console, window="_blank"]
+****
+
+[type=walkthroughResource]
+.Mobile Developer Services Documentation
+****
+* link:https://access.redhat.com/documentation/en-us/red_hat_mobile_developer_services/1[Documentation, window="_blank"]
+****
+
+[type=walkthroughResource,serviceName=codeready]
+.CodeReady Workspaces
+****
+* link:https://developers.redhat.com/products/codeready-workspaces/overview/[Overview, window="_blank"]
+* link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces_for_openshift/1.0.0/[Documentation, window="_blank"]
+****
+
+[type=walkthroughResource,serviceName=openshift]
+.Red Hat OpenShift
+****
+* link:{openshift-host}/console[Console, window="_blank"]
+* link:https://help.openshift.com/[Openshift Online Help Center, window="_blank"]
+* link:https://blog.openshift.com/[Openshift Blog, window="_blank"]
+****
+
+----
+This walktrough requires {mobile-services-name} to be installed on the 
+OpenShift server. Please check https://github.com/aerogear/mobile-services-installer
+for more information.
+----
+
+[time=20]
+== Deploying the Showcase Data Sync server
+
+The Data Sync framework is a set of libaries (base on the popular Apollo GraphQL server) that allows you to easily create mobile apps that can sync data to the backend with the following features:
+
+* Offline Support
+* Conflict Resolution
+* Easy integration with other mobile services
+
+This section describes how to deploy the example DataSync server in a {integreatly-name} cluster from the OpenShift Service Catalog.
+
+
+. Create a new project with the following name:
++
+----
+data-sync-walkthrough
+----
+. In the new project provision  'Data Sync Showcase' from the catalog.
+[NOTE]
+====
+* The form is already prefilled with all of the necessary values.
+* The only field you might want to change is
+`+AMQ Messaging User Password+`.
+** The default value is `+Password1+` in base64 encoding
+** The value _must_ be base64 encoded
+** A custom value can be created in the terminal using
+`+$ echo <password> | base64+`
+* When the create button is clicked, a warning message may be displayed
+====
++
+The hostname for the AMQ Online Broker, (needed by demo sever) is only made available after the resources from the the template have been provisioned. One more step is needed to update the ionic-showcase-server deployment with the correct
+`+MQTT_HOST+` environment variable.
+
+// TODO can this be an script it will run from CodeReady workspaces?
+// CodeReady workspace should have access to the project we are deploying to.
+. From the terminal, change project:
++
+----
+oc project data-sync-walkthrough
+----
+
+. Update the ionic-showcase-server deployment to add the `+MQTT_HOST+`
+variable:
++
+----
+oc set env dc/ionic-showcase-server MQTT_HOST="$(oc get addressspace showcase -o jsonpath='{.status.endpointStatuses[?(@.name=="messaging")].serviceHost}')"
+----
+
+. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into window:
++
+----
+query listTasks {
+  allTasks {
+    title,
+    description,
+    id
+  }
+}
+
+mutation createTask {
+  createTask(title: "complete the walkthrough", description: "complete the mobile walk through") {
+    title,
+    description,
+    version,
+    id
+  }
+}
+----
+
+[type=verification]
+Does the GraphQL playground allow you run and view results of the query and mutation?
+
+[type=verificationFail]
+----
+Check the logs of the `ionic-showcase-server` pod.
+It should include the string `+connected to messaging service+`.
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+----
+
+
+[time=5]
+== Creating a mobile app in Mobile Develope Console
+
+The Mobile Developer Console allows mobile developers to view avaiable mobile services, connect them them to their mobile apps and get the mobile app configurations.
+
+. Log in to the link:{route-mdc-server-host}[Mobile Developer Console, window="_blank"]
+. Click *Create Mobile App* to register your mobile app.
+. Enter the following name for your mobile app:
++
+----
+showcase-app
+----
++
+After the mobile app is registered, it is displayed on the console.
+. Click on the *showcase-app* card to display the configuration screen.
+. Click the *Mobile Services* tab.
+. Click *Bind to App* for *Data Sync* in the *Unbound Services* section.
+. Click Next on Binding screen. 
+. In Parameters Section provide {route-ionic-showcase-server-host} as `Server URL`
+. Copy `mobile-services.json` to some temporary location. We going to need it later
+
+
+[time=10]
+== Run the DataSync Client Showcase PWA application in CodeReady workspace
+
+The AeroGear showcase app demonstrates the capabilities provided by our Services and SDKs
+Starting with Data Sync, Data Sync is a set of Node.js and Client side modules that help you build apps with strong offline and realtime data sync capabilities using GraphQL.
+Showcase application can be run on both local machine and directly inside OpenShift thanks to `Code Ready` integration.
+In this step we going to utilize Code Ready to build mobile application that will connect to backend we run in previous steps.
+
+=== Steps
+
+. Login to CodeReady and you don’t need to create a workspace.
+. Modify the url to something like this:
+https://<codeready-host>/f?url=https://github.com/aerogear/ionic-showcase.git
+CodeReady will automatically set up a new workspace for you.
+. Next, you should be able to find a few prede-fined commands in the “Manage Commands” panel. Run the `build` command to install required dependencies, and then `serve` command to allow preview the app. 
+. Replace `mobile-services.json` created in previous steps located in `src/mobile-services.json`
+. Execute `serve` command. It will print the URL in console that can be used to launch the application
+. Showcase client should be running in your console and be ready to be used in your local browser and phone
+
+
+[time=10]
+== Run application on your browser or phone
+
+// TODO. We might add QR code to showcase for people to scan it
+Showcase app can be launched on mobile phone or your browser. 
+Application will contain many views that are designed to showcase various functionalities or our services.
+For this showcase we going to focus exclusively on DataSync which is implemented inside `Manage Tasks` view.
+DataSync framework will offer cross device synchronization. 
+To visualize it properly we need to have application open in at least 2 different devices or browser windows.
+
+=== Steps 
+
+. Open side panel 
+image::images/showcase.png[integration, role="integr8ly-img-responsive"]
+. Select `Manage Tasks`
+. Initially view will be empty. We can create task using `+` icon.
+. Put any information into new Task view and click on create button
+. Now we can mark task as `Done` using checkbox.
+. We can also edit Task and remove it afterwards
+. When doing all changes we should see them being automatically reflected in other aplication
+
+All this functionalities will help us later to showcase various offline and conflict resolution capabilties 
+of Data Sync framework.
+
+[time=15]
+== DataSync Offline Features
+
+DataSync framework will offer fully featured offline data access capabilities for the mobile and web clients.
+Developers can utilize it to build applications that will work independent of the network state.
+Showcase application contains integration with all offline capabilities offered by Data Sync Framework.
+In footer we should see current network state and number of offline changes we currently have.
+
+image::images/offline-footer.png[integration, role="integr8ly-img-responsive"]
+
+=== Steps
+
+. Let's open create task view and fill all task details
+. Please do not press create yet
+. To leverage offline capabilities we need to make sure that our application looses conectivity with our server. 
+On the Mobile phone this can be done by turning on airplane mode. 
+In Chrome browser you can use the Network tab from Chrome Developer Tools to simulate offline mode. (open them using F12, or using Command+Option+I on macOS)
+. Make your device go offline
+. Press `Create` button to create an new task
+. We should see task created and our `Offline Changes` button in footer containing now one change.
+. Let's edit task multiple times
+. Each edit will create new Task
+. We can review all offline items directly by clicking on `Offline Changes` button.
+. Please restore connectivity (depending on your device)
+. We should see all `Offline Changes` reflected back to server and appearing in second instance of the application.
+
+[time=6]
+== Conflict resolution functionalities
+
+Data Conflicts can happen when resource we modified was also modified on server.
+DataSync Framework enables multiple strategies to deal with conflicts. 
+By default Showcase will resolve conflicts by applying all server side changes on top of the client.
+In case of direct conflicts client field value will be used. 
+To simulate conflict we need to go offline and make edits in two instance of the application at the same time.
+
+=== Steps
+
+. Use one of the existing task or create new one that will be visible on two devices.
+. Go offline 
+. Edit Task on first instance
+. Go to second instance of the application
+. Edit Task on second instance
+. At this point we should have server side updated by second instance of the application
+and first application not knowing about that change because it went offline.
+. This operation will result in conflict. 
+. Once we make first client online again - data conflict will occur.
+We should see popup and actuall server side data being replicated back to the client (conflict was resolved automatically)
+
+. Use the “Manage Tasks” page in the showcase client app.
+. Try create one task in one device, and it should show up immediately in another.
+. Try bring one client offline (, perform some actions, bring it online and you should see the changes synced to another app straight away.
+. To create conflicts, try bringing both clients offline, and modify the same item. The last instance of app that is online will receive conflicts.
+
+== [Optional] Add security and Audit log configuration 
+
+To use additional sevices we need to perform additional binding in
+Mobile Developer Console.
+
+===  Steps
+. Log in to the link:{route-mdc-server-host}[Mobile Developer Console, window="_blank"]
+. Click on the *showcase-app* card to display the configuration screen.
+. Click the *Mobile Services* tab.
+. Click *Bind to App* for *Data Sync* in the *Unbound Services* section.
+. Click Next on Binding screen. 
+. Bind the `Mobile Metrics` and `Identity Management` services to the app by clicking on the "Bind To App" buttons. Use the default binding options, and once the bindings are completed, you will see them in the `Bound Services` section. 
+. Now go back to the `Configuration` tab again, you will see the `mobile-services.json` file is updated with information about the bound services. If you expand the row for each service, you will see the links to each of the service. Feel free to click on the links and explore the dashboard for each of the service.
+. Copy `mobile-services.json` to some temporary location. We going to need it later
+
+
+[time=35]
+== [Optional] Check the Data Synchonization Audit Logs
+
+You can use the OpenShift logging feature to see the audit logs that are generated by the syncserver app.
+
+=== Steps
+
+. Find out the URL of the Kibana dashboard of your OpenShift cluster:
+.. Run the following commands on the bastion server (as root user):
++
+----
+oc project openshift-logging
+oc get route
+----
++
+.. You should see there is a route called `logging-kibana`. Copy the `Host` value of that route and open it in your browser. You should see the Kibana dashboard page.
+. Filter out the audit log messages in Kibana. 
+.. On the `Discover` page, there should be a dropdown you can select on this page. Choose the namespace where the syncserver app is deployed to, and take a look at the messages.
+.. You should see a lot of messages, try expand one and see what the message looks like.
+.. In the `Search` field on the top, enter `tag:AUDIT` and you should be able to see the audit logs generated by the app. If you can't see any message, go to the GraphqQL playground page and execute some queries and then try search again.
+.. [Optional] Follow the steps descibed in link:https://github.com/aerogear/apollo-voyager-server/blob/master/doc/guides/metrics-and-audit-logs.md#importing-kibana-saved-objects:[Importing Kibana Saved Objects guide] and try importing a dashboard template for the sync app, and view the imported dashboard.
+
+
+[time=50]
+== [Optional] Protect the sync app by Keycloak
+
+The sync server app is not protected at the moment, let's bind it with Keycloak and protect the endpoints.
+
+=== Steps
+
+// TODO this is APB based. We need operator ones?
+// We need to figure out steps when keycloak operator will be ready
+
+. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift conosle, window="_blank"], find `Identity Management` in the "Provisioned Services" section, and click on "Create Binding".
+. Use the following configurations for the binding parameters:
+.. Mobile client ID/Service ID: `syncserver`
+.. Keycloak client type: `bearer`
+. Once the binding is created, we can mount the secret that is being created to the sync app: 
+.. Click on the `View Secret` link of the created binding
+.. In the secret's view, click on `Add To Application`
+.. Select `sync-app-syncserver` as the target application
+.. Add secret as `Volume` and set the mount path to `/tmp/keycloak`
+. Update the `sync-app-syncserver` to use the mounted secret:
+.. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/dc/sync-app-syncserver?tab=environment[Environment view] of the sync server deployment config, and add the following new environment variables and save.
+.. Name: `KEYCLOAK_CONFIG`, Value: `/tmp/keycloak/config`
+.. Name: `NODE_TLS_REJECT_UNAUTHORIZED`, Value: `0`
+. Wait for the sync server to be redeployed and starts up.
+. Now to go the link:{route-sync-app-syncserver-host}/graphql[GraphQL playground, window="_blank"] we have opened previously and refresh the page. This time you should get an `Access Denied` error. This is because the endpoint is now protected by Keycloak and requires user authentication. Let's add authentication to the client app.
+. Go to link:{route-mdc-server-host}[Mobile Developer Console, window="_blank"] and bind the `todoapp` to the `Identity Management` service. This time select `public` as the client type. When the binding is completed, you should see the `mobile-services.json` file is updated. Copy the content of the file.
+. Edit the `src/mobile-services.js` file in the client app, and paste in the new content. Build it and run it again. When you start it, you will be redirected to a login page. However, we don't have any users created yet, so let's do that:
+.. link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift conosle, window="_blank"], find the url for Keycloak and open it. On the landing page, go to the `Administration Console` and login as the admin user (you can use `admin/admin` as the username and password).
+.. Select `Users` on the left menu, and click on `View all users`. You will see there are no users in this realm. Click on `Add user` to create new ones. Pick a username you like and save.
+.. Go to `Credentials` tab and set a password for the user. Set `Temporary` option to `OFF`.
+. Now the user is created, you can use this user to login from the client app. Try it and you should be able to view the tasks that are created previously, and create new ones again.
+. Go to link:{route-grafana-host}[Grafana dashboard, window="_blank"] to view the metrics dashboard.
