@@ -7,9 +7,9 @@
 This walkthrough demonstrates running the mobile showcase application using the services provided by {mobile-services-name}. It will show you how to:
 
 * Build and run the link:{showcase-app-link}[Ionic mobile showcase app].
-* How to deploy the data sync server of the mobile showcase app to show data sync related features.
+* How to deploy the data sync server of the mobile showcase app.
 * How to protect the showcase mobile app and the backend service using the Identity Management service.
-* How to gain insights of the showcase app using the Mobile App Metrics service, including app and device info, device security info and service metrics.
+* What features are offered by the data sync framework.
 
 [type=walkthroughResource, serviceName=openshift]
 .OpenShift Project
