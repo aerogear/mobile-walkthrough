@@ -159,7 +159,7 @@ The showcase app is working, but not secure. Let's use the Identity Management s
 . Close the wizard. Once the binding process is completed, you should the *Identity Management* row is moved to the `Bound Services` section.
 . Go back to the `Configuration` tab of the app and you should see the content of `mobile-services.json` is updated. Copy the content and save it somewhere on the computer.
 
-=== Add Identity Management service to the data sync server
+=== Add Identity Management service to the showcase client and server applications
 
 . Go to the `Mobile Services` tab again and expand the *Identity Management* row. Open the `Keycloak Realm URL` in a new tab.
 . Login with username `admin` and password `admin`.
