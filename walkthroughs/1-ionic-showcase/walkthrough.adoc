@@ -228,8 +228,11 @@ image::images/showcase.png[integration, role="integr8ly-img-responsive"].
 . Make sure there are 2 instances of the app running.
 . In both instances of the app:
 .. Go offline
-.. Make some changes to the same task
+.. Make changes on name and description fields for the same tasks on two separate clients
 . Bring both of them back online again. You will see a popup showing up in the last instance that is back online warning about conflicts.
+. Go offline on both clients
+. Make changes on the name field on first client and description on the second one 
+. Bring both of them back online again. You should see changes merged on both clients automatically without conflict popup
 
 // [time=5]
 // == View the metrics data of mobile services
