@@ -4,12 +4,15 @@
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This walkthrough demonstrates running the mobile showcase application using the services provided by {mobile-services-name}. It will show you how to:
+This walkthrough demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
+
+It will show you how to:
 
 * Build and run the link:{showcase-app-link}[Ionic mobile showcase app].
-* How to deploy the data sync server of the mobile showcase app.
-* How to protect the showcase mobile app and the backend service using the Identity Management service.
-* What features are offered by the data sync framework.
+* Deploy the data sync server of the mobile showcase app.
+* Protect the showcase mobile app and the backend service using the Identity Management service.
+
+It will also introduce you to all features are offered by the data sync framework.
 
 [type=walkthroughResource, serviceName=openshift]
 .OpenShift Project
@@ -26,6 +29,7 @@ This walkthrough demonstrates running the mobile showcase application using the 
 [type=walkthroughResource]
 .Mobile Developer Services Documentation
 ****
+// TODO update
 * link:https://access.redhat.com/documentation/en-us/red_hat_mobile_developer_services/1[Documentation, window="_blank"]
 ****
 
