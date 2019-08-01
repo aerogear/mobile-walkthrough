@@ -142,8 +142,7 @@ In this step we will use CodeReady to build it as a PWA and run it in a browser.
 === Steps
 
 . Login to link:{che-url}[CodeReady Console, window="_blank"] and don't create a workspace just yet.
-. Modify the url to:
-https://{che-url}/f?url=https://github.com/aerogear/ionic-showcase.git and CodeReady will automatically set up a new workspace for you.
+. Modify the url to by appending path `/f?url=https://github.com/aerogear/ionic-showcase.git` and CodeReady will automatically set up a new workspace for you.
 . Open `src/mobile-services.json` in the CodeReady editor and replace it with the saved file content from the previous section.
 . Next, you should be able to find a few pre-defined commands in the “Manage Commands” panel. Run the `build` command to install required dependencies.
 . Execute `serve` command. It will print the URL in console that can be used to launch the application. Open the URL in a browser tab and you should see the showcase app working.
