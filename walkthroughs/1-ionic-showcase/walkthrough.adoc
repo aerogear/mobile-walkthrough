@@ -29,13 +29,13 @@ It will also introduce you to all features are offered by the data sync framewor
 [type=walkthroughResource]
 .Mobile Developer Services Documentation
 ****
-// TODO update
 * link:https://access.redhat.com/documentation/en-us/red_hat_mobile_developer_services/1[Documentation, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=codeready]
 .CodeReady Workspaces
 ****
+* link:{che-url}[Console, window="_blank"]
 * link:https://developers.redhat.com/products/codeready-workspaces/overview/[Overview, window="_blank"]
 * link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces_for_openshift/1.0.0/[Documentation, window="_blank"]
 ****
