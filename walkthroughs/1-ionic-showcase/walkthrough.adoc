@@ -23,7 +23,7 @@ It will also introduce you to all features are offered by the data sync framewor
 [type=walkthroughResource]
 .Mobile Developer Console
 ****
-* link:{route-mdc-mdc-proxy-host}[Mobile Developer Console, window="_blank"]
+* link:{route-mobile-developer-console-mdc-mdc-proxy-host}[Mobile Developer Console, window="_blank"]
 ****
 
 [type=walkthroughResource]
@@ -116,7 +116,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 The Mobile Developer Console allows mobile developers to view available mobile services, connect them to their mobile apps and get the mobile app configurations.
 
-. Log in to the link:{mobile-developer-console-mdc-mdc-proxy-route}[Mobile Developer Console, window="_blank"]
+. Log in to the link:{route-mobile-developer-console-mdc-mdc-proxy-host}[Mobile Developer Console, window="_blank"]
 . Click *Create Mobile App* to register your mobile app.
 . Enter the following name for your mobile app:
 +
@@ -156,7 +156,7 @@ The showcase app is working, but not secure. Let's use the Identity Management s
 
 === Add Identity Management service to the client app
 
-. Go to the link:{mobile-developer-console-mdc-mdc-proxy-route}[Mobile Developer Console, window="_blank"].
+. Go to the link:{route-mobile-developer-console-mdc-mdc-proxy-host}[Mobile Developer Console, window="_blank"].
 . Click on the *showcase-app* card to display the configuration screen.
 . Click the *Mobile Services* tab.
 . Click *Bind to App* for *Identity Management* in the *Unbound Services* section, with the following parameters:
