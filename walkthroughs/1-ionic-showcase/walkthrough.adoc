@@ -71,8 +71,11 @@ link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift
 ** The value _must_ be base64 encoded
 ** A custom value can be created in the terminal using
 `+$ echo <password> | base64+`
-* When the create button is clicked, a warning message may be displayed
 ====
+. Click the create button
+
+NOTE: A warning message may be displayed: `This will create resources that may have security or project behavior implications.` This message can be safely ignored. It is displayed because AMQ Online resources will be created.
+
 . The hostname for the AMQ Online Broker (needed by demo sever), is only made available after the resources from the the template have been provisioned. One more step is needed to update the ionic-showcase-server deployment with the correct
 `+MQTT_HOST+` environment variable.
 .. In the OpenShift console, click on "Resources -> Other Resources".
