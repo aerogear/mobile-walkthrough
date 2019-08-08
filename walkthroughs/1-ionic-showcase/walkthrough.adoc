@@ -51,37 +51,19 @@ It will also introduce you to all features are offered by the data sync framewor
 [time=10]
 == Deploying the Showcase Data Sync server
 
-You first need to deploy the data sync server of the showcase app using the OpenShift Service Catalog.
+You first need to deploy the data sync server of the showcase app.
 
-. Login to the link:{openshift-host}/console[OpenShift Console, window="_blank"] and create a new project with the following name:
-+
-----
-mobile-walkthrough
-----
+. Login to the link:{openshift-host}/console[OpenShift Console, window="_blank"]
 . Navigate to the `mobile-walkthrough` project.
 link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
-. Browse the catalog. 
+. Browse the template catalog. 
 . Search for the 'Data Sync Showcase' template and click on it to start provisioning.
 [NOTE]
 ====
-* The form will be pre-filled with all of the necessary values.
-* The only field you might want to change is
-`+AMQ Messaging User Password+`.
-** The default value is `+Password1+` in base64 encoding
-** The value _must_ be base64 encoded
-** A custom value can be created in the terminal using
-`+$ echo <password> | base64+`
+The form will be pre-filled with all of the necessary values.
 ====
 . Click the create button
-
-NOTE: A warning message may be displayed: `This will create resources that may have security or project behavior implications.` This message can be safely ignored. It is displayed because AMQ Online resources will be created.
-
-. The hostname for the AMQ Online Broker (needed by demo sever), is only made available after the resources from the the template have been provisioned. One more step is needed to update the ionic-showcase-server deployment with the correct
-`+MQTT_HOST+` environment variable.
-.. In the OpenShift console, click on "Resources -> Other Resources".
-.. Select the `Address Space` from the dropdown, and you should see an address space called `showcase` exist. Click on the `Actions` dropdown and choose `Edit YAML`.
-.. In the YAML file, look for the `status` field, and find the `endpointStatuses` section. Find the item that has the attribute `name: messaging`, and copy the value of the `serviceHost` field.
-.. Go to `Applications -> Deployments`, and select `ionic-showcase-server`. Choose the `Environment` tab and add a new environment variable called `+MQTT_HOST+`, and paste the value copied in the previous step. This will trigger a new deployment and wait for it to complete successfully.
+. This will trigger a new deployment and wait for it to complete successfully.
 . Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into window:
 +
 ----
@@ -145,7 +127,14 @@ In this step we will use CodeReady to build it as a PWA and run it in a browser.
 === Steps
 
 . Login to link:{che-url}[CodeReady Console, window="_blank"] and don't create a workspace just yet.
-. Modify the url to by appending path `/f?url=https://github.com/aerogear/ionic-showcase.git` and CodeReady will automatically set up a new workspace for you.
+. Download Showcase template from github:
+https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json
+. Go to `Factories` menu on the left side panel
+. Select Create and provide name
+. Select Source: **Config* and attach previously downloaded file
+. Select Create
+. In new window select Open to open workspace. 
+This should create new CodeReady workspace.
 . Open `src/mobile-services.json` in the CodeReady editor and replace it with the saved file content from the previous section.
 . Next, you should be able to find a few pre-defined commands in the “Manage Commands” panel. Run the `build` command to install required dependencies.
 . Execute `serve` command. It will print the URL in console that can be used to launch the application. Open the URL in a browser tab and you should see the showcase app working.
