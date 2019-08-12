@@ -199,10 +199,11 @@ The showcase app is working, but not secure. Let's use the Identity Management s
 
 In oder to use the showcase app to explore data sync features, it's best to run the multiple instances of the app using different browsers. You can run it in a browser on a mobile device if you have one. 
 
+image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
+
 === Real time sync 
 
 . Select one instance of the app and open side panel 
-image::images/showcase.png[integration, role="integr8ly-img-responsive"].
 . Select `Manage Tasks`.
 . Create a new task using `+` icon.
 . Put any information into the New Task view and click on the create button
