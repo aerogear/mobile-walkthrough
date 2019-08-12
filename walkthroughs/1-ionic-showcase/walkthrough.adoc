@@ -54,7 +54,7 @@ It will also introduce you to all features are offered by the data sync framewor
 You first need to deploy the data sync server of the showcase app.
 
 . Login to the link:{openshift-host}/console[OpenShift Console, window="_blank"]
-. Navigate to the `mobile-walkthrough` project.
+. Navigate to the existing project for this walkthrough
 link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
 . Browse the template catalog. 
 . Search for the 'Data Sync Showcase' template and click on it to start provisioning.
