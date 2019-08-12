@@ -153,7 +153,6 @@ The showcase app is working, but not secure. Let's use the Identity Management s
 . Click *Bind to App* for *Identity Management* in the *Unbound Services* section, with the following parameters:
 .. Admin User Name: `admin`
 .. Admin User Password: `admin`
-.. Client Type: `public`
 . Close the wizard. Once the binding process is completed, you should the *Identity Management* row is moved to the `Bound Services` section.
 . Go back to the `Configuration` tab of the app and you should see the content of `mobile-services.json` is updated. Copy the content and save it somewhere on the computer.
 
