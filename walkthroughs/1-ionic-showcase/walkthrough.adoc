@@ -130,7 +130,7 @@ In this step we will use CodeReady to build it as a PWA and run it in a browser.
 . Download Showcase template from github:
 https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json
 . Go to `Factories` menu on the left side panel
-. Select Create and provide name
+. Provide a name
 . Select Source: **Config* and attach previously downloaded file
 . Select Create
 . In new window select Open to open workspace. 
