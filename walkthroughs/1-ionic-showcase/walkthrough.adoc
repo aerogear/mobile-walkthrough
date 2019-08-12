@@ -171,7 +171,7 @@ The showcase app is working, but not secure. Let's use the Identity Management s
 .. Select `Users` on the left menu, and click on `View all users`. You will see there is only 1 admin user in the realm. Click on `Add user` to create new ones. Pick a username you like and save.
 .. Go to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
 . Next, we need to update the showcase sync server app to use the downloaded configuration file:
-.. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/config-maps[Config Maps page of the OpenShift console], and click on `Create Config Map`.
+.. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console], and click on `Create Config Map`.
 .. In the creation form, enter the following values:
 ... Name: `showcase-server-idm-config`
 ... Key: `keycloak.json`
