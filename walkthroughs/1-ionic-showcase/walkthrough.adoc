@@ -29,7 +29,7 @@ It will also introduce you to all features are offered by the data sync framewor
 [type=walkthroughResource]
 .Mobile Developer Services Documentation
 ****
-* link:https://access.redhat.com/documentation/en-us/red_hat_mobile_developer_services/1[Documentation, window="_blank"]
+* link:https://docs.aerogear.org/limited-availability/downstream/walkthrough.html[Documentation, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=codeready]
