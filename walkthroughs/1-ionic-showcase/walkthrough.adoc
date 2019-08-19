@@ -157,11 +157,17 @@ showcase-app
 . Click *Upload File* and upload the file you downloaded in step 2.
 
 . Select *Create*.
+This creates a new CodeReady workspace named `ionic-showcase`.
 
-. In new window select Open to open workspace. 
-This should create new CodeReady workspace.
-. Open `src/mobile-services.json` in the CodeReady editor and replace it with the saved file content from the previous section.
-. Next, you should be able to find a few pre-defined commands in the “Manage Commands” panel. Run the `build` command to install required dependencies.
+. Navigate to the `ionic-showcase` workspace.
+
+. Select the `src/mobile-services.json` file.
+. Paste contents from the Mobile Developer Console you saved earlier.
+The file is automatically saved. 
+
+. Choose *build* from the *Commands Pallette* (Shift F10).
+This installs required dependencies.
+
 . Execute `serve` command. It will print the URL in console that can be used to launch the application. Open the URL in a browser tab and you should see the showcase app working.
 . Open the `Manage Tasks` page of the showcase app and try create a few tasks. You can open the same URL in a few different tabs and see the tasks synced across all of them in real-time.
 
