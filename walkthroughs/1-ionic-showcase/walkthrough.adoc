@@ -1,10 +1,11 @@
 :showcase-app-link: https://github.com/aerogear/ionic-showcase
 :integreatly-name: Managed Integration
 :mobile-services-name: Mobile Developer Services
+:walkthrough-name: walkthrough
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This walkthrough demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
+This {walkthrough-name} demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
 
 It will show you how to:
 
@@ -15,7 +16,7 @@ It will show you how to:
 It will also introduce you to all features are offered by the data sync framework.
 
 [type=walkthroughResource, serviceName=openshift]
-.OpenShift Project
+.Mobile Project in OpenShift
 ****
 * link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
 ****
@@ -40,31 +41,26 @@ It will also introduce you to all features are offered by the data sync framewor
 * link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces_for_openshift/1.0.0/[Documentation, window="_blank"]
 ****
 
-[type=walkthroughResource,serviceName=openshift]
-.Red Hat OpenShift
-****
-* link:{openshift-host}/console[Console, window="_blank"]
-* link:https://help.openshift.com/[Openshift Online Help Center, window="_blank"]
-* link:https://blog.openshift.com/[Openshift Blog, window="_blank"]
-****
-
 [time=10]
 == Deploying the Showcase Data Sync server
 
 You first need to deploy the data sync server of the showcase app.
 
 . Login to the link:{openshift-host}/console[OpenShift Console, window="_blank"]
-. Navigate to the existing project for this walkthrough
-link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
-. Browse the template catalog. 
-. Search for the 'Data Sync Showcase' template and click on it to start provisioning.
-[NOTE]
-====
-The form will be pre-filled with all of the necessary values.
-====
-. Click the create button
-. This will trigger a new deployment and wait for it to complete successfully.
-. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into window:
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[mobile project, window="_blank"] in OpenShift.
+. Search the service catalog for 'Data Sync Showcase'.
+
+. Click on the 'Data Sync Showcase' entry to add it to your project.
+
+. Accept all the defaults of the provisioning wizard.
+
+. Check the *Overview* screen of your project and wait until three pods are running:
++
+* `ionic-showcase-server` - a Node.js app
+* `mosquitto-mqtt-broker` - a message broker
+* `postgresql` - a database. 
+
+. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into the left pane of the screen:
 +
 ----
 query listTasks {
@@ -84,13 +80,35 @@ mutation createTask {
   }
 }
 ----
++
+The query and mutation code can be used to verify your environment.
 
 [type=verification]
-Does the GraphQL playground allow you run and view results of the query and mutation?
+****
+. Click the Run icon in the middle of the playground screen.
+. Choose createTask from the menu.
+The system should create a task. 
+. Choose listTasks from the Run menu.
+. Check that the following is displayed in the right hand panel:
++
+----
+{
+    "data": {
+        "allTasks": [
+            {
+                "title": "complete the walkthrough",
+                "description": "complete the mobile walk through",
+                "id": "1"
+            }
+        ]
+    }
+}----
+****
 
 [type=verificationFail]
 ****
 Check the logs of the `ionic-showcase-server` pod.
+
 It should include the string `+connected to messaging service+`.
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
@@ -115,24 +133,31 @@ After the mobile app is registered, it is displayed on the console.
 . Click *Bind to App* for *Data Sync* in the *Unbound Services* section.
 . Click `Next` on Binding screen.
 . In Parameters Section provide {route-ionic-showcase-server-host} as `Server URL`
-. Copy `mobile-services.json` to some temporary location. We going to need it later.
+. Copy `mobile-services.json` to some temporary location. You require this data later.
 
 [time=10]
 == Build and run the mobile showcase app in a browser using CodeReady
 
-The showcase app demonstrates the key capabilities provided by {mobile-services-name}. It can run either as a hybrid mobile application, or a progressive web app (PWA).
+The showcase app demonstrates the key capabilities provided by {mobile-services-name}. 
+It can run either as a hybrid mobile application, or a progressive web app (PWA).
 
-In this step we will use CodeReady to build it as a PWA and run it in a browser.
+In this task, you use CodeReady to build it as a PWA and run it in a browser.
 
-=== Steps
+. Login to link:{che-url}[CodeReady Console, window="_blank"].
+. Download the link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template].
+. Select *Factories* from the left hand menu.
+. Click *Create Factory* if prompted.
+. Enter the following as the *Name*:
++
+----
+showcase-app
+----
+. In the *Source* section, selec the *Config* tab.
 
-. Login to link:{che-url}[CodeReady Console, window="_blank"] and don't create a workspace just yet.
-. Download Showcase template from github:
-https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json
-. Go to `Factories` menu on the left side panel
-. Provide a name
-. Select Source: *Config* and attach previously downloaded file
-. Select Create
+. Click *Upload File* and upload the file you downloaded in step 2.
+
+. Select *Create*.
+
 . In new window select Open to open workspace. 
 This should create new CodeReady workspace.
 . Open `src/mobile-services.json` in the CodeReady editor and replace it with the saved file content from the previous section.
