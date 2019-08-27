@@ -89,11 +89,11 @@ mutation createTask {
 Does the GraphQL playground allow you run and view results of the query and mutation?
 
 [type=verificationFail]
-----
+****
 Check the logs of the `ionic-showcase-server` pod.
 It should include the string `+connected to messaging service+`.
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-----
+****
 
 
 [time=5]
