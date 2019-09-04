@@ -2,6 +2,7 @@
 :integreatly-name: Managed Integration
 :mobile-services-name: Mobile Developer Services
 :walkthrough-name: walkthrough
+:crw-name: CodeReady Workspaces
 
 = Running the mobile showcase application with {mobile-services-name}
 
@@ -132,19 +133,23 @@ After the mobile app is registered, it is displayed on the console.
 . Click the *Mobile Services* tab.
 . Click *Bind to App* for *Data Sync* in the *Unbound Services* section.
 . Click `Next` on Binding screen.
-. In Parameters Section provide {route-ionic-showcase-server-host} as `Server URL`
-. Copy `mobile-services.json` to some temporary location. You require this data later.
+. When prompted for a *Server URL*, enter:
++
+----
+ {route-ionic-showcase-server-host}
+----
+. Download the `mobile-services.json` file, you will require this file in a later task.
 
 [time=10]
-== Build and run the mobile showcase app in a browser using CodeReady
+== Build and run the mobile showcase app in a browser using {crw-name}
 
 The showcase app demonstrates the key capabilities provided by {mobile-services-name}. 
-It can run either as a hybrid mobile application, or a progressive web app (PWA).
+It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-In this task, you use CodeReady to build it as a PWA and run it in a browser.
+In this task, you build a PWA and run it in a browser.
 
 . Login to link:{che-url}[CodeReady Console, window="_blank"].
-. Download the link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template].
+. Download the link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template, window="_blank"].
 . Select *Factories* from the left hand menu.
 . Click *Create Factory* if prompted.
 . Enter the following as the *Name*:
@@ -152,29 +157,47 @@ In this task, you use CodeReady to build it as a PWA and run it in a browser.
 ----
 showcase-app
 ----
-. In the *Source* section, selec the *Config* tab.
+. In the *Source* section, select the *Config* tab.
 
 . Click *Upload File* and upload the file you downloaded in step 2.
 
 . Select *Create*.
 This creates a new CodeReady workspace named `ionic-showcase`.
 
-. Navigate to the `ionic-showcase` workspace.
+. Click *OPEN* to navigate to the `ionic-showcase` workspace.
+Initializing and starting the workspace can take a few minutes.
 
-. Select the `src/mobile-services.json` file.
-. Paste contents from the Mobile Developer Console you saved earlier.
+. Edit the `src/mobile-services.json` file.
+
+. Paste the contents of the `mobile-services.json` file you saved earlier.
 The file is automatically saved. 
 
-. Choose *build* from the *Commands Pallette* (Shift F10).
+. Access the *Commands Pallette* using Shift F10.
+
+. Choose *build* from the command pallette menu.
 This installs required dependencies.
 
-. Execute `serve` command. It will print the URL in console that can be used to launch the application. Open the URL in a browser tab and you should see the showcase app working.
-. Open the `Manage Tasks` page of the showcase app and try create a few tasks. You can open the same URL in a few different tabs and see the tasks synced across all of them in real-time.
+. Choose *serve*  from the command pallette menu. 
+
+. Click the URL displayed in the *serve* terminal console.
+The showcase app is displayed.
+
+. Select  *Manage Tasks* from the left hand menu.
+
+
+[type=verification]
+****
+. Create a task.
+. Open the same URL in a different tab
+. Change the status of the task 
+. Verify that the task is synced across all tabs in real-time.
+****
+
 
 [time=15]
 == Protect the mobile showcase app by Identity Management service
 
-The showcase app is working, but not secure. Let's use the Identity Management service to protect both the client and the data sync server.
+In this task, you use the Identity Management service to protect both the client and the data sync server.
 
 === Add Identity Management service to the client app
 
@@ -185,7 +208,8 @@ The showcase app is working, but not secure. Let's use the Identity Management s
 .. Admin User Name: `admin`
 .. Admin User Password: `admin`
 . Close the wizard. Once the binding process is completed, you should the *Identity Management* row is moved to the `Bound Services` section.
-. Go back to the `Configuration` tab of the app and you should see the content of `mobile-services.json` is updated. Copy the content and save it somewhere on the computer.
+. Go back to the `Configuration` tab of the app and you should see the content of `mobile-services.json` is updated. 
+. Copy the content and save it somewhere on the computer.
 
 === Add Identity Management service to the showcase client and server applications
 
