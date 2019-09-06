@@ -3,6 +3,7 @@
 :mobile-services-name: Mobile Developer Services
 :walkthrough-name: walkthrough
 :crw-name: CodeReady Workspaces
+:customer-sso-name: End user SSO instance
 
 = Running the mobile showcase application with {mobile-services-name}
 
@@ -138,7 +139,7 @@ After the mobile app is registered, it is displayed on the console.
 ----
  {route-ionic-showcase-server-host}
 ----
-. Download the `mobile-services.json` file, you will require this file in a later task.
+. Copy and save the `mobile-services.json` file, you will require this file in a later task.
 
 [time=10]
 == Build and run the mobile showcase app in a browser using {crw-name}
@@ -177,10 +178,11 @@ The file is automatically saved.
 . Choose *build* from the command pallette menu.
 This installs required dependencies.
 
-. Choose *serve*  from the command pallette menu. 
+. Choose *serve*  from the command pallette menu.
+This starts a web server to serve the PWA.
 
 . Click the URL displayed in the *serve* terminal console.
-The showcase app is displayed.
+The showcase app is displayed. Note the URL of the PWA.
 
 . Select  *Manage Tasks* from the left hand menu.
 
@@ -193,58 +195,137 @@ The showcase app is displayed.
 . Verify that the task is synced across all tabs in real-time.
 ****
 
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
 
 [time=15]
-== Protect the mobile showcase app by Identity Management service
+== Protect the mobile showcase app using the Identity Management service
 
-In this task, you use the Identity Management service to protect both the client and the data sync server.
+In this task, you use the Identity Management service to protect both the client (PWA) and the data sync server.
 
-=== Add Identity Management service to the client app
+=== Add Identity Management service to the client app (PWA) and create a realm for users
 
-. Go to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
+. Navigate to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
 . Click on the *showcase-app* card to display the configuration screen.
 . Click the *Mobile Services* tab.
-. Click *Bind to App* for *Identity Management* in the *Unbound Services* section, with the following parameters:
-.. Admin User Name: `admin`
-.. Admin User Password: `admin`
-. Close the wizard. Once the binding process is completed, you should the *Identity Management* row is moved to the `Bound Services` section.
-. Go back to the `Configuration` tab of the app and you should see the content of `mobile-services.json` is updated. 
-. Copy the content and save it somewhere on the computer.
+. Click *Bind to App* for *Identity Management* in the *Unbound Services* section.
+.. When prompted for an *Admin User Name* enter:
+----
+admin
+----
+.. When prompted for an *Admin User Password* enter:
+----
+admin
+----
+. Complete the wizard. 
+This process also creates a new realm in the {customer-sso-name}.
 
-=== Add Identity Management service to the showcase client and server applications
+. Navigate to the *Configuration* tab of the *mobile app* in the Mobile Developer Console.
 
-. Go to the `Mobile Services` tab again and expand the *Identity Management* row. Open the `Keycloak Realm URL` in a new tab.
-. Login with username `admin` and password `admin`.
-. After the console is loaded, we need to create a new client for the showcase data sync server and add some users for the showcase app:
+. Copy and save the `mobile-services.json` file, you will require this file in a later task.
+
+[type=verification]
+****
+Is *Identity Management* row listed the `Bound Services` section for *showcase-app*?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+=== Configure Identity Management service for the showcase client and server applications
+
+. Navigate to the *Mobile Services* tab.
+
+. Expand the *Identity Management* section.
+
+. Click the *Keycloak Realm URL* to open the {customer-sso-name} Admin Console.
+
+. Log in using the following for both username and password:
++
+----
+admin
+----
+
+. Create a new client for the showcase data sync server:
 .. Choose `Configure -> clients` in the menu.
 .. Click on the `Create` button on the top-right corner, and create a new client with the following parameters:
-... Client ID: `showcase-app-server`
-... Do not change the rest of the fields.
+.. Client ID: `showcase-app-server`
+.. Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only` and save again.
 .. Click on the `Installation` tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
+
+Create some users for the showcase app:
 .. Select `Users` on the left menu, and click on `View all users`. You will see there is only 1 admin user in the realm. Click on `Add user` to create new ones. Pick a username you like and save.
-.. Go to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
-. Next, we need to update the showcase sync server app to use the downloaded configuration file:
-.. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console], and click on `Create Config Map`.
-.. In the creation form, enter the following values:
-... Name: `showcase-server-idm-config`
-... Key: `keycloak.json`
-... Value: Use the `Browser` button to load the `keycloak.json` file that was downloaded previously.
-.. Once the config map object is created, go to `Applications -> Deployments`. Select the deployment config for `ionic-showcase-server`.
-.. Click on the *Configuration* tab, and find the `Volumes` section. Click on the `Add Config Files` at the bottom of the section.
-... Choose the `showcase-server-idm-config` config map as the *Source*.
-... Set the value for *Mount Path* to be `/tmp/keycloak`.
-... Click on `Add`. This will trigger a new deployment.
-.. Go to the *Environment* tab of the deployment config, and add a new environment variable:
-... Name: `KEYCLOAK_CONFIG`
-... Value: `/tmp/keycloak/keycloak.json`
-.. Wait for the deployment to complete and the showcase data sync server is running.
-. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page. This time you should get an `Access Denied` error. This is because the endpoint is now protected by Keycloak and requires user authentication.
+.. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
+
+. Update the showcase sync server app to use the downloaded configuration file:
+.. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+.. Click *Create Config Map*.
+.. When prompted for *Name*, enter: 
++
+----
+showcase-server-idm-config
+----
+.. When prompted for *Key*, enter:
++
+----
+keycloak.json
+----
+.. For *Value*, click *Browser* and load the `keycloak.json` file that you downloaded previously.
+The config map object is created.
+
+.. Choose *Deployments* from the *Applications* menu. 
+
+.. Select the deployment config for `ionic-showcase-server`.
+
+.. Click on the *Configuration* tab, and scroll to the *Volumes* section. 
+
+.. Click on the *Add Config Files* option at the bottom of the section.
+
+.. Choose the `showcase-server-idm-config` config map as the *Source*.
+.. Set the value for *Mount Path* to:
++
+----
+/tmp/keycloak
+----
+
+.. Click *Add* to trigger a new deployment.
+
+.. Navigate to the *Environment* tab of the deployment config, and add a new environment variable:
+... Set Name to: 
++
+----
+KEYCLOAK_CONFIG
+----
+... Set Value to: 
++
+----
+/tmp/keycloak/keycloak.json
+----
++
+Wait for the deployment to complete and the showcase data sync server is running.
+
+[type=verification]
+****
+Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page.
+Do you get an `Access Denied` error because the endpoint requires user authentication?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+
 
 === Update the config of the showcase client app and run it
 
-. Go to link:{che-url}[CodeReady Console, window="_blank"] and open the workspace for the showcase app that we have created in one of the previous steps.
+. Navigate to link:{che-url}[CodeReady Console, window="_blank"] and open the workspace for the showcase app that we have created in one of the previous steps.
 . Open `src/mobile-services.json` in the CodeReady editor and replace it with the updated version from the Mobile Developer Console.
 . Execute the `build` and `serve` commands again. Open the URL in a browser tab and this time you will be presented with a login page.
 . Login with the user credentials you have created, and you should be able to continue using the app. Try create more tasks and see if it works.
@@ -313,5 +394,5 @@ image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 // . Filter out the audit log messages in Kibana. 
 // .. On the `Discover` page, there should be a dropdown you can select on this page. Choose the namespace where the syncserver app is deployed to, and take a look at the messages.
 // .. You should see a lot of messages, try expand one and see what the message looks like.
-// .. In the `Search` field on the top, enter `tag:AUDIT` and you should be able to see the audit logs generated by the app. If you can't see any message, go to the GraphqQL playground page and execute some queries and then try search again.
+// .. In the `Search` field on the top, enter `tag:AUDIT` and you should be able to see the audit logs generated by the app. If you can't see any message, Navigate to the GraphqQL playground page and execute some queries and then try search again.
 // .. [Optional] Follow the steps descibed in link:https://github.com/aerogear/apollo-voyager-server/blob/master/doc/guides/metrics-and-audit-logs.md#importing-kibana-saved-objects:[Importing Kibana Saved Objects guide] and try importing a dashboard template for the sync app, and view the imported dashboard.
