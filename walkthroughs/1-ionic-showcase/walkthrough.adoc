@@ -17,7 +17,7 @@ It will show you how to:
 
 It will also introduce you to all features are offered by the data sync framework.
 
-image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
+image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
 
 [type=walkthroughResource, serviceName=openshift]
