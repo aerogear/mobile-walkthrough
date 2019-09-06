@@ -17,6 +17,9 @@ It will show you how to:
 
 It will also introduce you to all features are offered by the data sync framework.
 
+image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
+
+
 [type=walkthroughResource, serviceName=openshift]
 .Mobile Project in OpenShift
 ****
@@ -32,7 +35,7 @@ It will also introduce you to all features are offered by the data sync framewor
 [type=walkthroughResource]
 .Mobile Developer Services Documentation
 ****
-* link:https://access.redhat.com/documentation/en-us/red_hat_mobile_developer_services/1[Documentation, window="_blank"]
+* link:https://docs.aerogear.org/limited-availability/downstream/walkthrough.html[Documentation, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=codeready]
@@ -182,7 +185,7 @@ This installs required dependencies.
 This starts a web server to serve the PWA.
 
 . Click the URL displayed in the *serve* terminal console.
-The showcase app is displayed. Note the URL of the PWA.
+The showcase app is displayed.
 
 . Select  *Manage Tasks* from the left hand menu.
 
@@ -325,48 +328,154 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 === Update the config of the showcase client app and run it
 
-. Navigate to link:{che-url}[CodeReady Console, window="_blank"] and open the workspace for the showcase app that we have created in one of the previous steps.
-. Open `src/mobile-services.json` in the CodeReady editor and replace it with the updated version from the Mobile Developer Console.
-. Execute the `build` and `serve` commands again. Open the URL in a browser tab and this time you will be presented with a login page.
-. Login with the user credentials you have created, and you should be able to continue using the app. Try create more tasks and see if it works.
+. Navigate to link:{che-url}[CodeReady Console, window="_blank"] 
+
+. Navigate to the `ionic-showcase` workspace.
+Starting the workspace can take a few minutes.
+
+. Edit the `src/mobile-services.json` file.
+
+. Paste the contents of the `mobile-services.json` file you saved earlier.
+The file is automatically saved. 
+
+. Access the *Commands Pallette* using Shift F10.
+
+. Choose *build* from the command pallette menu.
+This installs required dependencies.
+
+. Choose *serve*  from the command pallette menu.
+This starts a web server to serve the PWA.
+
+. Click the URL displayed in the *serve* terminal console.
+A login page is displayed.
+
+. Log in with the user credentials you created earlier.
+
+[type=verification]
+****
+Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page.
+Is the playground displayed?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+
 
 [time=10]
 == Exploring data sync features using the showcase app
 
-In oder to use the showcase app to explore data sync features, it's best to run the multiple instances of the app using different browsers. You can run it in a browser on a mobile device if you have one. 
+To explore data sync features, run the multiple instances of the data sync app using different browsers. 
+For example, use the browser on your mobile device as well as using the browser on your laptop.
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
-=== Real time sync 
+=== Demonstrating real-time sync 
 
-. Select one instance of the app and open side panel 
-. Select `Manage Tasks`.
-. Create a new task using `+` icon.
-. Put any information into the New Task view and click on the create button
-. Check other instances of the app and you should see the same task appear.
-. Make some changes to the task in any instance of the app, and you should see the all the changes are automatically synced across all instances.
+. On your laptop:
+.. Select *Manage Tasks*.
+.. Create a new task using *+* icon.
+.. Enter some task text  and click *Create*.
 
-=== Offline Support
+. On your mobile device:
+.. Check that the same task appears in the *Manage Tasks* page.
+.. Make some changes to the task.
 
-. In order to demo the offline feature, we need to get the device into offline mode first.
-.. On a mobile phone this can be done by turning on airplane mode. 
-.. In a browser you can use the developer tool to simulate offline mode (For example, in Chrome, you can open it by pressing F12, or using Command+Option+I on macOS. Select the `Network` tab, and check `Offline`).
-. Create a new task in the showcase app. The task should be created and the `Offline Changes` button in the footer should contain one change.
-. Try make a few more changes by either editing existing tasks, or creating new ones.
-. You can review all the changes you have made while offline directly by clicking on `Offline Changes` button.
-. Check other instances of the app and you will not see any of the changes you have made because the current one is offline.
-. Restore connectivity, and once the client is online again, you should see all `Offline Changes` are synced to the server and appearing in other instances of the showcase app.
+. On your laptop:
+.. Check that the task changes are appear.
 
-=== Conflict resolution
 
-. Make sure there are 2 instances of the app running.
-. In both instances of the app:
-.. Go offline
-.. Make changes on name and description fields for the same tasks on two separate clients
-. Bring both of them back online again. You will see a popup showing up in the last instance that is back online warning about conflicts.
-. Go offline on both clients
-. Make changes on the name field on first client and description on the second one 
-. Bring both of them back online again. You should see changes merged on both clients automatically without conflict popup
+[type=verification]
+****
+Did the tasks appear as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+
+
+=== Demonstrationg offline support
+
+. On your mobile device:
+.. Log into the showcase app. 
+.. Activate airplane mode or disable network connectivity.
+.. Create a new task. 
+The task should be created and the *Offline Changes* button in the footer should contain one change.
+.. Make a few more changes by either editing existing tasks, or creating new ones.
+.. Review all the changes by clicking the *Offline Changes* button.
+
+. On your laptop:
+.. Log into the showcase app. 
+.. Check *Manage Tasks* content.
+You do not see any of the changes from the mobile device.
+
+. On your mobile device:
+.. Restore connectivity or deactivate airplane modes.
+.. Watch the status of the tasks change.
+
+. On your laptop:
+.. Check *Manage Tasks* content.
+.. Check that all the tasks are synced.
+
+
+[type=verification]
+****
+Did the tasks appear as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+=== Avoiding and resolving conflicts
+
+. On your mobile device:
+.. Log into the showcase app. 
+.. Create a task `todo A`.
+.. Activate airplane mode or disable network connectivity.
+.. Edit the task description to add the text `edited on mobile`.
+
+. On your laptop:
+.. Log into the showcase app.
+.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+.. Edit the `todo A` task, change the text to `todo B`.
+
+. Bring both of your devices back online, the tasks should sync without a conflict.
+
+. On your mobile device:
+.. Activate airplane mode or disable network connectivity.
+.. Edit task `todo B` change the description to:
++
+----
+Conflicting description from mobile
+----
+
+. On your laptop:
+.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+.. Edit task `todo B` change the description to:
++
+----
+Conflicting description from laptop
+----
+
+. Bring both of your devices back online, a popup window should appear warning you about conflicts.
+
+
+[type=verification]
+****
+Did the tasks sync as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
 
 // [time=5]
 // == View the metrics data of mobile services
