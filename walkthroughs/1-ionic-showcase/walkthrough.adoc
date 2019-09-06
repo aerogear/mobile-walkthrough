@@ -1,13 +1,12 @@
 :showcase-app-link: https://github.com/aerogear/ionic-showcase
 :integreatly-name: Managed Integration
 :mobile-services-name: Mobile Developer Services
-:walkthrough-name: walkthrough
 :crw-name: CodeReady Workspaces
 :customer-sso-name: End user SSO instance
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This {walkthrough-name} demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
+This This Solution Pattern demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
 
 It will show you how to:
 
