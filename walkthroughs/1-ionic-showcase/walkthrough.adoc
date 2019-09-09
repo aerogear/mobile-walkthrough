@@ -6,7 +6,7 @@
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This This Solution Pattern demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
+This Solution Pattern demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
 
 It will show you how to:
 
