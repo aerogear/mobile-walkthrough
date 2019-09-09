@@ -1,10 +1,12 @@
 :showcase-app-link: https://github.com/aerogear/ionic-showcase
 :integreatly-name: Managed Integration
 :mobile-services-name: Mobile Developer Services
+:crw-name: CodeReady Workspaces
+:customer-sso-name: End user SSO instance
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This walkthrough demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
+This Solution Pattern demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
 
 It will show you how to:
 
@@ -14,8 +16,11 @@ It will show you how to:
 
 It will also introduce you to all features are offered by the data sync framework.
 
+image::images/arch.png[architecture, role="integr8ly-img-responsive"]
+
+
 [type=walkthroughResource, serviceName=openshift]
-.OpenShift Project
+.Mobile Project in OpenShift
 ****
 * link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
 ****
@@ -29,7 +34,7 @@ It will also introduce you to all features are offered by the data sync framewor
 [type=walkthroughResource]
 .Mobile Developer Services Documentation
 ****
-* link:https://access.redhat.com/documentation/en-us/red_hat_mobile_developer_services/1[Documentation, window="_blank"]
+* link:https://docs.aerogear.org/limited-availability/downstream/walkthrough.html[Documentation, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=codeready]
@@ -40,31 +45,26 @@ It will also introduce you to all features are offered by the data sync framewor
 * link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces_for_openshift/1.0.0/[Documentation, window="_blank"]
 ****
 
-[type=walkthroughResource,serviceName=openshift]
-.Red Hat OpenShift
-****
-* link:{openshift-host}/console[Console, window="_blank"]
-* link:https://help.openshift.com/[Openshift Online Help Center, window="_blank"]
-* link:https://blog.openshift.com/[Openshift Blog, window="_blank"]
-****
-
 [time=10]
 == Deploying the Showcase Data Sync server
 
 You first need to deploy the data sync server of the showcase app.
 
 . Login to the link:{openshift-host}/console[OpenShift Console, window="_blank"]
-. Navigate to the existing project for this walkthrough
-link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
-. Browse the template catalog. 
-. Search for the 'Data Sync Showcase' template and click on it to start provisioning.
-[NOTE]
-====
-The form will be pre-filled with all of the necessary values.
-====
-. Click the create button
-. This will trigger a new deployment and wait for it to complete successfully.
-. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into window:
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[mobile project, window="_blank"] in OpenShift.
+. Search the service catalog for 'Data Sync Showcase'.
+
+. Click on the 'Data Sync Showcase' entry to add it to your project.
+
+. Accept all the defaults of the provisioning wizard.
+
+. Check the *Overview* screen of your project and wait until three pods are running:
++
+* `ionic-showcase-server` - a Node.js app
+* `mosquitto-mqtt-broker` - a message broker
+* `postgresql` - a database. 
+
+. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into the left pane of the screen:
 +
 ----
 query listTasks {
@@ -84,13 +84,35 @@ mutation createTask {
   }
 }
 ----
++
+The query and mutation code can be used to verify your environment.
 
 [type=verification]
-Does the GraphQL playground allow you run and view results of the query and mutation?
+****
+. Click the Run icon in the middle of the playground screen.
+. Choose createTask from the menu.
+The system should create a task. 
+. Choose listTasks from the Run menu.
+. Check that the following is displayed in the right hand panel:
++
+----
+{
+    "data": {
+        "allTasks": [
+            {
+                "title": "complete the walkthrough",
+                "description": "complete the mobile walk through",
+                "id": "1"
+            }
+        ]
+    }
+}----
+****
 
 [type=verificationFail]
 ****
 Check the logs of the `ionic-showcase-server` pod.
+
 It should include the string `+connected to messaging service+`.
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
@@ -114,123 +136,346 @@ After the mobile app is registered, it is displayed on the console.
 . Click the *Mobile Services* tab.
 . Click *Bind to App* for *Data Sync* in the *Unbound Services* section.
 . Click `Next` on Binding screen.
-. In Parameters Section provide {route-ionic-showcase-server-host} as `Server URL`
-. Copy `mobile-services.json` to some temporary location. We going to need it later.
+. When prompted for a *Server URL*, enter:
++
+[subs="attributes+"]
+----
+{route-ionic-showcase-server-host}
+----
+. Copy and save the `mobile-services.json` file, you will require this file in a later task.
 
 [time=10]
-== Build and run the mobile showcase app in a browser using CodeReady
+== Build and run the mobile showcase app in a browser using {crw-name}
 
-The showcase app demonstrates the key capabilities provided by {mobile-services-name}. It can run either as a hybrid mobile application, or a progressive web app (PWA).
+The showcase app demonstrates the key capabilities provided by {mobile-services-name}. 
+It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-In this step we will use CodeReady to build it as a PWA and run it in a browser.
+In this task, you build a PWA and run it in a browser.
 
-=== Steps
+. Login to link:{che-url}[CodeReady Console, window="_blank"].
+. Download the link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template, window="_blank"].
+. Select *Factories* from the left hand menu.
+. Click *Create Factory* if prompted.
+. Enter the following as the *Name*:
++
+----
+showcase-app
+----
+. In the *Source* section, select the *Config* tab.
 
-. Login to link:{che-url}[CodeReady Console, window="_blank"] and don't create a workspace just yet.
-. Download Showcase template from github:
-https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json
-. Go to `Factories` menu on the left side panel
-. Provide a name
-. Select Source: *Config* and attach previously downloaded file
-. Select Create
-. In new window select Open to open workspace. 
-This should create new CodeReady workspace.
-. Open `src/mobile-services.json` in the CodeReady editor and replace it with the saved file content from the previous section.
-. Next, you should be able to find a few pre-defined commands in the “Manage Commands” panel. Run the `build` command to install required dependencies.
-. Execute `serve` command. It will print the URL in console that can be used to launch the application. Open the URL in a browser tab and you should see the showcase app working.
-. Open the `Manage Tasks` page of the showcase app and try create a few tasks. You can open the same URL in a few different tabs and see the tasks synced across all of them in real-time.
+. Click *Upload File* and upload the file you downloaded in step 2.
+
+. Select *Create*.
+This creates a new CodeReady workspace named `ionic-showcase`.
+
+. Click *OPEN* to navigate to the `ionic-showcase` workspace.
+Initializing and starting the workspace can take a few minutes.
+
+. Edit the `src/mobile-services.json` file.
+
+. Paste the contents of the `mobile-services.json` file you saved earlier.
+The file is automatically saved. 
+
+. Access the *Commands Pallette* using Shift F10.
+
+. Choose *build* from the command pallette menu.
+This installs required dependencies.
+
+. Choose *serve*  from the command pallette menu.
+This starts a web server to serve the PWA.
+
+. Click the URL displayed in the *serve* terminal console.
+The showcase app is displayed.
+
+. Select  *Manage Tasks* from the left hand menu.
+
+
+[type=verification]
+****
+. Create a task.
+. Open the same URL in a different tab
+. Change the status of the task 
+. Verify that the task is synced across all tabs in real-time.
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
 
 [time=15]
-== Protect the mobile showcase app by Identity Management service
+== Protect the mobile showcase app using the Identity Management service
 
-The showcase app is working, but not secure. Let's use the Identity Management service to protect both the client and the data sync server.
+In this task, you use the Identity Management service to protect both the client (PWA) and the data sync server.
 
-=== Add Identity Management service to the client app
+=== Add Identity Management service to the client app (PWA) and create a realm for users
 
-. Go to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
+. Navigate to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
 . Click on the *showcase-app* card to display the configuration screen.
 . Click the *Mobile Services* tab.
-. Click *Bind to App* for *Identity Management* in the *Unbound Services* section, with the following parameters:
-.. Admin User Name: `admin`
-.. Admin User Password: `admin`
-. Close the wizard. Once the binding process is completed, you should the *Identity Management* row is moved to the `Bound Services` section.
-. Go back to the `Configuration` tab of the app and you should see the content of `mobile-services.json` is updated. Copy the content and save it somewhere on the computer.
+. Click *Bind to App* for *Identity Management* in the *Unbound Services* section.
+.. When prompted for an *Admin User Name* enter:
+----
+admin
+----
+.. When prompted for an *Admin User Password* enter:
+----
+admin
+----
+. Complete the wizard. 
+This process also creates a new realm in the {customer-sso-name}.
 
-=== Add Identity Management service to the showcase client and server applications
+. Navigate to the *Configuration* tab of the *mobile app* in the Mobile Developer Console.
 
-. Go to the `Mobile Services` tab again and expand the *Identity Management* row. Open the `Keycloak Realm URL` in a new tab.
-. Login with username `admin` and password `admin`.
-. After the console is loaded, we need to create a new client for the showcase data sync server and add some users for the showcase app:
+. Copy and save the `mobile-services.json` file, you will require this file in a later task.
+
+[type=verification]
+****
+Is *Identity Management* row listed the `Bound Services` section for *showcase-app*?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+=== Configure Identity Management service for the showcase client and server applications
+
+. Navigate to the *Mobile Services* tab.
+
+. Expand the *Identity Management* section.
+
+. Click the *Keycloak Realm URL* to open the {customer-sso-name} Admin Console.
+
+. Log in using the following for both username and password:
++
+----
+admin
+----
+
+. Create a new client for the showcase data sync server:
 .. Choose `Configure -> clients` in the menu.
 .. Click on the `Create` button on the top-right corner, and create a new client with the following parameters:
-... Client ID: `showcase-app-server`
-... Do not change the rest of the fields.
+.. Client ID: `showcase-app-server`
+.. Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only` and save again.
 .. Click on the `Installation` tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
+
+Create some users for the showcase app:
 .. Select `Users` on the left menu, and click on `View all users`. You will see there is only 1 admin user in the realm. Click on `Add user` to create new ones. Pick a username you like and save.
-.. Go to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
-. Next, we need to update the showcase sync server app to use the downloaded configuration file:
-.. Go to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console], and click on `Create Config Map`.
-.. In the creation form, enter the following values:
-... Name: `showcase-server-idm-config`
-... Key: `keycloak.json`
-... Value: Use the `Browser` button to load the `keycloak.json` file that was downloaded previously.
-.. Once the config map object is created, go to `Applications -> Deployments`. Select the deployment config for `ionic-showcase-server`.
-.. Click on the *Configuration* tab, and find the `Volumes` section. Click on the `Add Config Files` at the bottom of the section.
-... Choose the `showcase-server-idm-config` config map as the *Source*.
-... Set the value for *Mount Path* to be `/tmp/keycloak`.
-... Click on `Add`. This will trigger a new deployment.
-.. Go to the *Environment* tab of the deployment config, and add a new environment variable:
-... Name: `KEYCLOAK_CONFIG`
-... Value: `/tmp/keycloak/keycloak.json`
-.. Wait for the deployment to complete and the showcase data sync server is running.
-. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page. This time you should get an `Access Denied` error. This is because the endpoint is now protected by Keycloak and requires user authentication.
+.. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
+
+. Update the showcase sync server app to use the downloaded configuration file:
+.. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+.. Click *Create Config Map*.
+.. When prompted for *Name*, enter: 
++
+----
+showcase-server-idm-config
+----
+.. When prompted for *Key*, enter:
++
+----
+keycloak.json
+----
+.. For *Value*, click *Browser* and load the `keycloak.json` file that you downloaded previously.
+The config map object is created.
+
+.. Choose *Deployments* from the *Applications* menu. 
+
+.. Select the deployment config for `ionic-showcase-server`.
+
+.. Click on the *Configuration* tab, and scroll to the *Volumes* section. 
+
+.. Click on the *Add Config Files* option at the bottom of the section.
+
+.. Choose the `showcase-server-idm-config` config map as the *Source*.
+.. Set the value for *Mount Path* to:
++
+----
+/tmp/keycloak
+----
+
+.. Click *Add* to trigger a new deployment.
+
+.. Navigate to the *Environment* tab of the deployment config, and add a new environment variable:
+... Set Name to: 
++
+----
+KEYCLOAK_CONFIG
+----
+... Set Value to: 
++
+----
+/tmp/keycloak/keycloak.json
+----
++
+Wait for the deployment to complete and the showcase data sync server is running.
+
+[type=verification]
+****
+Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page.
+Do you get an `Access Denied` error because the endpoint requires user authentication?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+
 
 === Update the config of the showcase client app and run it
 
-. Go to link:{che-url}[CodeReady Console, window="_blank"] and open the workspace for the showcase app that we have created in one of the previous steps.
-. Open `src/mobile-services.json` in the CodeReady editor and replace it with the updated version from the Mobile Developer Console.
-. Execute the `build` and `serve` commands again. Open the URL in a browser tab and this time you will be presented with a login page.
-. Login with the user credentials you have created, and you should be able to continue using the app. Try create more tasks and see if it works.
+. Navigate to link:{che-url}[CodeReady Console, window="_blank"] 
+
+. Navigate to the `ionic-showcase` workspace.
+Starting the workspace can take a few minutes.
+
+. Edit the `src/mobile-services.json` file.
+
+. Paste the contents of the `mobile-services.json` file you saved earlier.
+The file is automatically saved. 
+
+. Access the *Commands Pallette* using Shift F10.
+
+. Choose *build* from the command pallette menu.
+This installs required dependencies.
+
+. Choose *serve*  from the command pallette menu.
+This starts a web server to serve the PWA.
+
+. Click the URL displayed in the *serve* terminal console.
+A login page is displayed.
+
+. Log in with the user credentials you created earlier.
+
+[type=verification]
+****
+Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page.
+Is the playground displayed?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+
 
 [time=10]
 == Exploring data sync features using the showcase app
 
-In oder to use the showcase app to explore data sync features, it's best to run the multiple instances of the app using different browsers. You can run it in a browser on a mobile device if you have one. 
+To explore data sync features, run the multiple instances of the data sync app using different browsers. 
+For example, use the browser on your mobile device as well as using the browser on your laptop.
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
-=== Real time sync 
+=== Demonstrating real-time sync 
 
-. Select one instance of the app and open side panel 
-. Select `Manage Tasks`.
-. Create a new task using `+` icon.
-. Put any information into the New Task view and click on the create button
-. Check other instances of the app and you should see the same task appear.
-. Make some changes to the task in any instance of the app, and you should see the all the changes are automatically synced across all instances.
+. On your laptop:
+.. Select *Manage Tasks*.
+.. Create a new task using *+* icon.
+.. Enter some task text  and click *Create*.
 
-=== Offline Support
+. On your mobile device:
+.. Check that the same task appears in the *Manage Tasks* page.
+.. Make some changes to the task.
 
-. In order to demo the offline feature, we need to get the device into offline mode first.
-.. On a mobile phone this can be done by turning on airplane mode. 
-.. In a browser you can use the developer tool to simulate offline mode (For example, in Chrome, you can open it by pressing F12, or using Command+Option+I on macOS. Select the `Network` tab, and check `Offline`).
-. Create a new task in the showcase app. The task should be created and the `Offline Changes` button in the footer should contain one change.
-. Try make a few more changes by either editing existing tasks, or creating new ones.
-. You can review all the changes you have made while offline directly by clicking on `Offline Changes` button.
-. Check other instances of the app and you will not see any of the changes you have made because the current one is offline.
-. Restore connectivity, and once the client is online again, you should see all `Offline Changes` are synced to the server and appearing in other instances of the showcase app.
+. On your laptop:
+.. Check that the task changes are appear.
 
-=== Conflict resolution
 
-. Make sure there are 2 instances of the app running.
-. In both instances of the app:
-.. Go offline
-.. Make changes on name and description fields for the same tasks on two separate clients
-. Bring both of them back online again. You will see a popup showing up in the last instance that is back online warning about conflicts.
-. Go offline on both clients
-. Make changes on the name field on first client and description on the second one 
-. Bring both of them back online again. You should see changes merged on both clients automatically without conflict popup
+[type=verification]
+****
+Did the tasks appear as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+
+
+=== Demonstrationg offline support
+
+. On your mobile device:
+.. Log into the showcase app. 
+.. Activate airplane mode or disable network connectivity.
+.. Create a new task. 
+The task should be created and the *Offline Changes* button in the footer should contain one change.
+.. Make a few more changes by either editing existing tasks, or creating new ones.
+.. Review all the changes by clicking the *Offline Changes* button.
+
+. On your laptop:
+.. Log into the showcase app. 
+.. Check *Manage Tasks* content.
+You do not see any of the changes from the mobile device.
+
+. On your mobile device:
+.. Restore connectivity or deactivate airplane modes.
+.. Watch the status of the tasks change.
+
+. On your laptop:
+.. Check *Manage Tasks* content.
+.. Check that all the tasks are synced.
+
+
+[type=verification]
+****
+Did the tasks appear as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+=== Avoiding and resolving conflicts
+
+. On your mobile device:
+.. Log into the showcase app. 
+.. Create a task `todo A`.
+.. Activate airplane mode or disable network connectivity.
+.. Edit the task description to add the text `edited on mobile`.
+
+. On your laptop:
+.. Log into the showcase app.
+.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+.. Edit the `todo A` task, change the text to `todo B`.
+
+. Bring both of your devices back online, the tasks should sync without a conflict.
+
+. On your mobile device:
+.. Activate airplane mode or disable network connectivity.
+.. Edit task `todo B` change the description to:
++
+----
+Conflicting description from mobile
+----
+
+. On your laptop:
+.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+.. Edit task `todo B` change the description to:
++
+----
+Conflicting description from laptop
+----
+
+. Bring both of your devices back online, a popup window should appear warning you about conflicts.
+
+
+[type=verification]
+****
+Did the tasks sync as expected?
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
 
 // [time=5]
 // == View the metrics data of mobile services
@@ -258,5 +503,5 @@ image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 // . Filter out the audit log messages in Kibana. 
 // .. On the `Discover` page, there should be a dropdown you can select on this page. Choose the namespace where the syncserver app is deployed to, and take a look at the messages.
 // .. You should see a lot of messages, try expand one and see what the message looks like.
-// .. In the `Search` field on the top, enter `tag:AUDIT` and you should be able to see the audit logs generated by the app. If you can't see any message, go to the GraphqQL playground page and execute some queries and then try search again.
+// .. In the `Search` field on the top, enter `tag:AUDIT` and you should be able to see the audit logs generated by the app. If you can't see any message, Navigate to the GraphqQL playground page and execute some queries and then try search again.
 // .. [Optional] Follow the steps descibed in link:https://github.com/aerogear/apollo-voyager-server/blob/master/doc/guides/metrics-and-audit-logs.md#importing-kibana-saved-objects:[Importing Kibana Saved Objects guide] and try importing a dashboard template for the sync app, and view the imported dashboard.
