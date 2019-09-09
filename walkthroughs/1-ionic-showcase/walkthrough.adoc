@@ -138,8 +138,9 @@ After the mobile app is registered, it is displayed on the console.
 . Click `Next` on Binding screen.
 . When prompted for a *Server URL*, enter:
 +
+[subs="attributes+"]
 ----
- {route-ionic-showcase-server-host}
+{route-ionic-showcase-server-host}
 ----
 . Copy and save the `mobile-services.json` file, you will require this file in a later task.
 
