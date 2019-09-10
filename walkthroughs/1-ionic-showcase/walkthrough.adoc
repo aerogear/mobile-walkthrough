@@ -57,7 +57,7 @@ You first need to deploy the data sync server of the showcase app.
 
 . Click on the 'Data Sync Showcase' entry to add it to your project.
 
-. Accept all the defaults of the provisioning wizard.
+. Accept all the defaults of the provisioning wizard and click *Create*.
 
 . Check the *Overview* screen of your project and wait until three pods are running:
 +
