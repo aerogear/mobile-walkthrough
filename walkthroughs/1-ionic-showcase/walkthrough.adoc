@@ -6,7 +6,7 @@
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This Solution Pattern demonstrates running the mobile showcase application using the services provided by Mobile Developer Services. 
+This Solution Pattern demonstrates running the mobile showcase application using the services provided by Mobile Developer Services.
 
 It will show you how to:
 
@@ -62,7 +62,7 @@ You first need to deploy the data sync server of the showcase app.
 +
 * `ionic-showcase-server` - a Node.js app
 * `mosquitto-mqtt-broker` - a message broker
-* `postgresql` - a database. 
+* `postgresql` - a database.
 
 . Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into the left pane of the screen:
 +
@@ -91,7 +91,7 @@ The query and mutation code can be used to verify your environment.
 ****
 . Click the Run icon in the middle of the playground screen.
 . Choose createTask from the menu.
-The system should create a task. 
+The system should create a task.
 . Choose listTasks from the Run menu.
 . Check that the following is displayed in the right hand panel:
 +
@@ -142,12 +142,14 @@ After the mobile app is registered, it is displayed on the console.
 ----
 {route-ionic-showcase-server-host}
 ----
+. Click the *Create* button.
+. Navigate to the Configuration tab of the mobile app in the Mobile Developer Console.
 . Copy and save the `mobile-services.json` file, you will require this file in a later task.
 
 [time=10]
 == Build and run the mobile showcase app in a browser using {crw-name}
 
-The showcase app demonstrates the key capabilities provided by {mobile-services-name}. 
+The showcase app demonstrates the key capabilities provided by {mobile-services-name}.
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
 In this task, you build a PWA and run it in a browser.
@@ -174,7 +176,7 @@ Initializing and starting the workspace can take a few minutes.
 . Edit the `src/mobile-services.json` file.
 
 . Paste the contents of the `mobile-services.json` file you saved earlier.
-The file is automatically saved. 
+The file is automatically saved.
 
 . Access the *Commands Pallette* using Shift F10.
 
@@ -194,7 +196,7 @@ The showcase app is displayed.
 ****
 . Create a task.
 . Open the same URL in a different tab
-. Change the status of the task 
+. Change the status of the task
 . Verify that the task is synced across all tabs in real-time.
 ****
 
@@ -222,7 +224,7 @@ admin
 ----
 admin
 ----
-. Complete the wizard. 
+. Complete the wizard.
 This process also creates a new realm in the {customer-sso-name}.
 
 . Navigate to the *Configuration* tab of the *mobile app* in the Mobile Developer Console.
@@ -269,7 +271,7 @@ Create some users for the showcase app:
 . Update the showcase sync server app to use the downloaded configuration file:
 .. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
 .. Click *Create Config Map*.
-.. When prompted for *Name*, enter: 
+.. When prompted for *Name*, enter:
 +
 ----
 showcase-server-idm-config
@@ -282,11 +284,11 @@ keycloak.json
 .. For *Value*, click *Browser* and load the `keycloak.json` file that you downloaded previously.
 The config map object is created.
 
-.. Choose *Deployments* from the *Applications* menu. 
+.. Choose *Deployments* from the *Applications* menu.
 
 .. Select the deployment config for `ionic-showcase-server`.
 
-.. Click on the *Configuration* tab, and scroll to the *Volumes* section. 
+.. Click on the *Configuration* tab, and scroll to the *Volumes* section.
 
 .. Click on the *Add Config Files* option at the bottom of the section.
 
@@ -300,12 +302,12 @@ The config map object is created.
 .. Click *Add* to trigger a new deployment.
 
 .. Navigate to the *Environment* tab of the deployment config, and add a new environment variable:
-... Set Name to: 
+... Set Name to:
 +
 ----
 KEYCLOAK_CONFIG
 ----
-... Set Value to: 
+... Set Value to:
 +
 ----
 /tmp/keycloak/keycloak.json
@@ -328,7 +330,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 === Update the config of the showcase client app and run it
 
-. Navigate to link:{che-url}[CodeReady Console, window="_blank"] 
+. Navigate to link:{che-url}[CodeReady Console, window="_blank"]
 
 . Navigate to the `ionic-showcase` workspace.
 Starting the workspace can take a few minutes.
@@ -336,7 +338,7 @@ Starting the workspace can take a few minutes.
 . Edit the `src/mobile-services.json` file.
 
 . Paste the contents of the `mobile-services.json` file you saved earlier.
-The file is automatically saved. 
+The file is automatically saved.
 
 . Access the *Commands Pallette* using Shift F10.
 
@@ -367,12 +369,12 @@ Verify that you followed each step in the procedure above.  If you are still hav
 [time=10]
 == Exploring data sync features using the showcase app
 
-To explore data sync features, run the multiple instances of the data sync app using different browsers. 
+To explore data sync features, run the multiple instances of the data sync app using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
-=== Demonstrating real-time sync 
+=== Demonstrating real-time sync
 
 . On your laptop:
 .. Select *Manage Tasks*.
@@ -402,15 +404,15 @@ Verify that you followed each step in the procedure above.  If you are still hav
 === Demonstrationg offline support
 
 . On your mobile device:
-.. Log into the showcase app. 
+.. Log into the showcase app.
 .. Activate airplane mode or disable network connectivity.
-.. Create a new task. 
+.. Create a new task.
 The task should be created and the *Offline Changes* button in the footer should contain one change.
 .. Make a few more changes by either editing existing tasks, or creating new ones.
 .. Review all the changes by clicking the *Offline Changes* button.
 
 . On your laptop:
-.. Log into the showcase app. 
+.. Log into the showcase app.
 .. Check *Manage Tasks* content.
 You do not see any of the changes from the mobile device.
 
@@ -436,7 +438,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 === Avoiding and resolving conflicts
 
 . On your mobile device:
-.. Log into the showcase app. 
+.. Log into the showcase app.
 .. Create a task `todo A`.
 .. Activate airplane mode or disable network connectivity.
 .. Edit the task description to add the text `edited on mobile`.
@@ -500,7 +502,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 // ----
 // +
 // .. You should see there is a route called `logging-kibana`. Copy the `Host` value of that route and open it in your browser. You should see the Kibana dashboard page.
-// . Filter out the audit log messages in Kibana. 
+// . Filter out the audit log messages in Kibana.
 // .. On the `Discover` page, there should be a dropdown you can select on this page. Choose the namespace where the syncserver app is deployed to, and take a look at the messages.
 // .. You should see a lot of messages, try expand one and see what the message looks like.
 // .. In the `Search` field on the top, enter `tag:AUDIT` and you should be able to see the audit logs generated by the app. If you can't see any message, Navigate to the GraphqQL playground page and execute some queries and then try search again.
