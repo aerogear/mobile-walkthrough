@@ -287,8 +287,8 @@ showcase-server-idm-config
 ----
 keycloak.json
 ----
-.. For *Value*, click *Browser* and load the `keycloak.json` file that you downloaded previously.
-The config map object is created.
+.. For *Value*, click *Browse* and load the `keycloak.json` file that you downloaded previously.
+.. Click *Create*. The config map object is created.
 
 .. Choose *Deployments* from the *Applications* menu.
 
@@ -307,7 +307,7 @@ The config map object is created.
 
 .. Click *Add* to trigger a new deployment.
 
-.. Navigate to the *Environment* tab of the deployment config, and add a new environment variable:
+.. Click the *Environment* tab and click *Add Value*
 ... Set Name to:
 +
 ----
