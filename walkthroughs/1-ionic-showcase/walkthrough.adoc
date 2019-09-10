@@ -158,7 +158,7 @@ It can run either as a hybrid mobile application, or a Progressive Web App (PWA)
 In this task, you build a PWA and run it in a browser.
 
 . Login to link:{che-url}[CodeReady Console, window="_blank"].
-. Download the link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template, window="_blank"].
+. Download this link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template JSON file, window="_blank"].
 . Select *Factories* from the left hand menu.
 . Click *Create Factory* if prompted.
 . Enter the following as the *Name*:
