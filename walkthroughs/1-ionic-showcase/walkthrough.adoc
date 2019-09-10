@@ -262,16 +262,15 @@ admin
 ----
 
 . Create a new client for the showcase data sync server:
-.. Choose `Configure -> clients` in the menu.
-.. Click on the `Create` button on the top-right corner, and create a new client with the following parameters:
-.. Client ID: `showcase-app-server`
-.. Do not change the rest of the fields.
+.. Choose *Clients* under *Configure* in the menu
+.. Click on the *Create* button on the top-right corner to start creating a new client
+.. Enter `showcase-app-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only` and save again.
-.. Click on the `Installation` tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
 
-Create some users for the showcase app:
-.. Select `Users` on the left menu, and click on `View all users`. You will see there is only 1 admin user in the realm. Click on `Add user` to create new ones. Pick a username you like and save.
+. Create some users for the showcase app:
+.. Select `Users` on the left menu, and click on `View all users`. You will see there is only 1 admin user in the realm. Click on *Add user* to create new ones. Pick a username you like and save.
 .. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
 
 . Update the showcase sync server app to use the downloaded configuration file:
