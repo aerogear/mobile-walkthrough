@@ -219,7 +219,7 @@ In this task, you use the Identity Management service to protect both the client
 . Navigate to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
 . Click on the *showcase-app* card to display the configuration screen.
 . Click the *Mobile Services* tab.
-. Click *Bind to App* for *Identity Management* in the *Unbound Services* section.
+. Click *Bind to App* for *Identity Management* in the *Unbound Services* section and then click the *next* button.
 .. When prompted for an *Admin User Name* enter:
 ----
 admin
