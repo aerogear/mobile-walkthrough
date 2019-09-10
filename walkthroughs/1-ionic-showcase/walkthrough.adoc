@@ -221,10 +221,12 @@ In this task, you use the Identity Management service to protect both the client
 . Click the *Mobile Services* tab.
 . Click *Bind to App* for *Identity Management* in the *Unbound Services* section and then click the *next* button.
 .. When prompted for an *Admin User Name* enter:
++
 ----
 admin
 ----
 .. When prompted for an *Admin User Password* enter:
++
 ----
 admin
 ----
