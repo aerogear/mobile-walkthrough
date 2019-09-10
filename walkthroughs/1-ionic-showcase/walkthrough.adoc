@@ -132,6 +132,8 @@ The Mobile Developer Console allows mobile developers to view available mobile s
 showcase-app
 ----
 +
+. Click *Create*.
++
 After the mobile app is registered, it is displayed on the console.
 . Click on the *showcase-app* card to display the configuration screen.
 . Click the *Mobile Services* tab.
