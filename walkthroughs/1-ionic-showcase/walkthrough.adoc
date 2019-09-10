@@ -178,7 +178,7 @@ Initializing and starting the workspace can take a few minutes.
 
 . Edit the `src/mobile-services.json` file.
 
-. Paste the contents of the `mobile-services.json` file you saved earlier.
+. Paste the contents of the `mobile-services.json` file you saved earlier, replacing any text already there.
 The file is automatically saved.
 
 . Access the *Commands Pallette* using Shift F10.
