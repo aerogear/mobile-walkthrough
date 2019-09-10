@@ -270,7 +270,8 @@ admin
 .. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
 
 . Create some users for the showcase app:
-.. Select `Users` on the left menu, and click on `View all users`. You will see there is only 1 admin user in the realm. Click on *Add user* to create new ones. Pick a username you like and save.
+.. Select *Users* on the left menu, and click on *View all users*.
+.. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
 .. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
 
 . Update the showcase sync server app to use the downloaded configuration file:
