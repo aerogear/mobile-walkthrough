@@ -65,7 +65,7 @@ You first need to deploy the data sync server of the showcase app.
 * `mosquitto-mqtt-broker` - a message broker
 * `postgresql` - a database.
 
-. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and paste the following query/mutation into the left pane of the screen:
+. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and remove any text in the left pane of the screen. Paste the following query/mutation into the left pane of the screen:
 +
 ----
 query listTasks {
