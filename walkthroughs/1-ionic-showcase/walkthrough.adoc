@@ -197,10 +197,11 @@ The showcase app is displayed.
 
 [type=verification]
 ****
-. Create a task.
+. Create a task by clicking on the plus icon in the top right-hand side of the screen
+. Add a title and description to the task and click *Create*
 . Open the same URL in a different tab
-. Change the status of the task
-. Verify that the task is synced across all tabs in real-time.
+. Change the status of the task by clicking/unclicking the text box beside the task
+. Verify that the status of the task is synced across all tabs in real-time.
 ****
 
 [type=verificationFail]
