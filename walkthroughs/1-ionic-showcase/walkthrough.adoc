@@ -274,8 +274,6 @@ admin
 .. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
 .. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
 
-Keep this page open and we will come back to the admin console again later.
-
 . Update the showcase sync server app to use the downloaded configuration file:
 .. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
 .. Click *Create Config Map*.
@@ -359,11 +357,11 @@ This starts a web server to serve the PWA.
 . Update the client in {customer-sso-name} service to add a new redirect url
 
 .. Copy the URL displayed in the *serve* terminal console
-.. Go back to the {customer-sso-name} Admin Console, and choose `Configure -> clients` in the menu.
+.. Navigate to the {customer-sso-name} Admin Console, and choose `Configure -> clients` in the menu.
 .. Select the client with ID `showcase-app-client`.
-.. Add the copied URL as a new value to the `Valid Redirect URIs` field and save it.
+.. Add the copied URL as a new value to the `Valid Redirect URIs` field and place an asterisk (*) at the end of the URL.  Save it.
 
-. Go back to the CodeReady console and click on the URL displayed in the *serve* terminal console, or open the copied url in a new tab.
+. Navigate to the CodeReady console and click on the URL displayed in the *serve* terminal console, or open the copied url in a new tab.
 
 . Log in with the user credentials you created earlier.
 
