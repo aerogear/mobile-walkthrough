@@ -359,7 +359,7 @@ This starts a web server to serve the PWA.
 .. Copy the URL displayed in the *serve* terminal console
 .. Go back to the {customer-sso-name} Admin Console, and choose `Configure -> clients` in the menu.
 .. Select the client with ID `showcase-app-client`.
-.. Add the copied URL as a new value to the `Valid Redirect URIs` field and save it.
+.. Add the copied URL as a new value to the `Valid Redirect URIs` field and place an asterisk (*) at the end of the URL.  Save it.
 
 . Go back to the CodeReady console and click on the URL displayed in the *serve* terminal console, or open the copied url in a new tab.
 
