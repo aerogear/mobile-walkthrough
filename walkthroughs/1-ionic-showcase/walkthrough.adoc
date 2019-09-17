@@ -152,7 +152,7 @@ After the mobile app is registered, it is displayed on the console.
 . Copy and save the `mobile-services.json` file, you will require this file in a later task.
 
 [time=10]
-== Build and run the mobile showcase app in a browser using {crw-name}
+== Build and run the mobile showcase app in a browser
 
 The showcase app demonstrates the key capabilities provided by {mobile-services-name}.
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
