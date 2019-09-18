@@ -384,18 +384,18 @@ Verify that you followed each step in the procedure above.  If you are still hav
 == Exploring data sync features using the showcase app
 
 To explore data sync features, run the multiple instances of the data sync app using different browsers.
-For example, use the browser on your mobile device as well as using the browser on your laptop.
+For example, use Chrome and Firefox browsers.
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
 === Demonstrating real-time sync
 
-. On your laptop:
+. Using the Chrome browser:
 .. Select *Manage Tasks*.
 .. Create a new task using *+* icon.
 .. Enter some task text  and click *Create*.
 
-. On your mobile device:
+. Using the Firefox browser:
 .. Check that the same task appears in the *Manage Tasks* page.
 .. Make some changes to the task.
 
