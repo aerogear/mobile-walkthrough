@@ -109,7 +109,8 @@ The system should create a task.
             }
         ]
     }
-}----
+}
+----
 ****
 
 [type=verificationFail]
@@ -399,8 +400,8 @@ image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 .. Check that the same task appears in the *Manage Tasks* page.
 .. Make some changes to the task.
 
-. On your laptop:
-.. Check that the task changes are appear.
+. Using the Chrome browser:
+.. Check that the task changes appear.
 
 
 [type=verification]
@@ -417,24 +418,24 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 === Demonstrationg offline support
 
-. On your mobile device:
+. Using the Firefox browser:
 .. Log into the showcase app.
-.. Activate airplane mode or disable network connectivity.
+.. Simulate offline mode. In Firefox, select *Work Offline* from the *Web Developers* menu.
 .. Create a new task.
 The task should be created and the *Offline Changes* button in the footer should contain one change.
 .. Make a few more changes by either editing existing tasks, or creating new ones.
 .. Review all the changes by clicking the *Offline Changes* button.
 
-. On your laptop:
+. Using the Chrome browser:
 .. Log into the showcase app.
 .. Check *Manage Tasks* content.
-You do not see any of the changes from the mobile device.
+You do not see any of the changes from the firefox browser.
 
-. On your mobile device:
-.. Restore connectivity or deactivate airplane modes.
+. Using the Firefox browser:
+.. Return to online mode.
 .. Watch the status of the tasks change.
 
-. On your laptop:
+. Using the Chrome browser:
 .. Check *Manage Tasks* content.
 .. Check that all the tasks are synced.
 
@@ -451,33 +452,33 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 === Avoiding and resolving conflicts
 
-. On your mobile device:
+. Using the Firefox browser:
 .. Log into the showcase app.
 .. Create a task `todo A`.
-.. Activate airplane mode or disable network connectivity.
+.. Simulate offline mode. In Firefox, select *Work Offline* from the *Web Developers* menu.
 .. Edit the task description to add the text `edited on mobile`.
 
-. On your laptop:
+. Using the Chrome browser:
 .. Log into the showcase app.
-.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+.. Simulate offline mode. In Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
 .. Edit the `todo A` task, change the text to `todo B`.
 
 . Bring both of your devices back online, the tasks should sync without a conflict.
 
-. On your mobile device:
-.. Activate airplane mode or disable network connectivity.
+. Using the Firefox browser:
+.. Simulate offline mode. In Firefox, select *Work Offline* from the *Web Developers* menu.
 .. Edit task `todo B` change the description to:
 +
 ----
 Conflicting description from mobile
 ----
 
-. On your laptop:
-.. Simulate offline mode. For example, in Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
+. Using the Chrome browser:
+.. Simulate offline mode. In Chrome, press F12 to open *Developer Tools* and select *offline* in  the *Network* tab.
 .. Edit task `todo B` change the description to:
 +
 ----
-Conflicting description from laptop
+Conflicting description from chrome browser
 ----
 
 . Bring both of your devices back online, a popup window should appear warning you about conflicts.
