@@ -369,8 +369,7 @@ This starts a web server to serve the PWA.
 
 [type=verification]
 ****
-Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page.
-Is the playground displayed?
+Are you able to successfully log in?
 ****
 
 [type=verificationFail]
