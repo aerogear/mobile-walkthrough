@@ -325,8 +325,7 @@ Wait for the deployment to complete and the showcase data sync server is running
 
 [type=verification]
 ****
-Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] page again and refresh the page.
-Do you get an `Access Denied` error because the endpoint requires user authentication?
+Has the deployment completed?
 ****
 
 [type=verificationFail]
