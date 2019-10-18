@@ -14,7 +14,7 @@ It will show you how to:
 * Deploy the data sync server of the mobile showcase app.
 * Protect the showcase mobile app and the backend service using the Identity Management service.
 
-It will also introduce you to all features are offered by the data sync framework.
+It will also introduce you to all features offered by the data sync framework.
 
 image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
@@ -126,7 +126,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 The Mobile Developer Console allows mobile developers to view available mobile services, connect them to their mobile apps and get the mobile app configurations.
 
-. Log in to the link:{mdc-url}[Mobile Developer Console, window="_blank"]
+. Log in to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
 . Click *Create Mobile App* to register your mobile app.
 . Enter the following name for your mobile app:
 +
@@ -183,12 +183,12 @@ Initializing and starting the workspace can take a few minutes.
 . Paste the contents of the `mobile-services.json` file you saved earlier, replacing any text already there.
 The file is automatically saved.
 
-. Access the *Commands Pallette* using Shift F10.
+. Access the *Commands Palette* using Shift F10.
 
-. Choose *build* from the command pallette menu.
+. Choose *build* from the command palette menu.
 This installs required dependencies.
 
-. Choose *serve*  from the command pallette menu.
+. Choose *serve*  from the command palette menu.
 This starts a web server to serve the PWA.
 
 . Click the URL displayed in the *serve* terminal console.
@@ -199,10 +199,10 @@ The showcase app is displayed.
 
 [type=verification]
 ****
-. Create a task by clicking on the plus icon in the top right-hand side of the screen
-. Add a title and description to the task and click *Create*
-. Open the same URL in a different tab
-. Change the status of the task by clicking/unclicking the text box beside the task
+. Create a task by clicking on the plus icon in the top right-hand side of the screen.
+. Add a title and description to the task and click *Create*.
+. Open the same URL in a different tab.
+. Change the status of the task by clicking/unclicking the text box beside the task.
 . Verify that the status of the task is synced across all tabs in real-time.
 ****
 
@@ -264,8 +264,8 @@ admin
 ----
 
 . Create a new client for the showcase data sync server:
-.. Choose *Clients* under *Configure* in the menu
-.. Click on the *Create* button on the top-right corner to start creating a new client
+.. Choose *Clients* under *Configure* in the menu.
+.. Click on the *Create* button on the top-right corner to start creating a new client.
 .. Enter `showcase-app-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only` and save again.
@@ -309,7 +309,7 @@ keycloak.json
 
 .. Click *Add* to trigger a new deployment.
 
-.. Click the *Environment* tab and click *Add Value*
+.. Click the *Environment* tab and click *Add Value*.
 ... Set Name to:
 +
 ----
@@ -347,17 +347,17 @@ Starting the workspace can take a few minutes.
 . Paste the contents of the `mobile-services.json` file you saved earlier.
 The file is automatically saved.
 
-. Access the *Commands Pallette* using Shift F10.
+. Access the *Commands Palette* using Shift F10.
 
-. Choose *build* from the command pallette menu.
+. Choose *build* from the command palette menu.
 This installs required dependencies.
 
-. Choose *serve*  from the command pallette menu.
+. Choose *serve*  from the command palette menu.
 This starts a web server to serve the PWA.
 
 . Update the client in {customer-sso-name} service to add a new redirect url
 
-.. Copy the URL displayed in the *serve* terminal console
+.. Copy the URL displayed in the *serve* terminal console.
 .. Navigate to the {customer-sso-name} Admin Console, and choose `Configure -> clients` in the menu.
 .. Select the client with ID `showcase-app-client`.
 .. Add the copied URL as a new value to the `Valid Redirect URIs` field and place an asterisk (*) at the end of the URL.  Save it.
