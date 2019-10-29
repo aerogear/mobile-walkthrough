@@ -34,7 +34,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 [type=walkthroughResource]
 .Mobile Developer Services Documentation
 ****
-* link:https://docs.aerogear.org/limited-availability/downstream/walkthrough.html[Documentation, window="_blank"]
+* link:https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/getting_started_with_mobile_developer_services/index[Getting Started with Mobile Developer Services, window="_blank"]
 ****
 
 [type=walkthroughResource,serviceName=codeready]
@@ -42,7 +42,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 ****
 * link:{che-url}[Console, window="_blank"]
 * link:https://developers.redhat.com/products/codeready-workspaces/overview/[Overview, window="_blank"]
-* link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces_for_openshift/1.0.0/[Documentation, window="_blank"]
+* link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces[Documentation, window="_blank"]
 ****
 
 :sectnums:
