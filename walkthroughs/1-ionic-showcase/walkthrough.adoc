@@ -120,37 +120,6 @@ It should include the string `+connected to messaging service+`.
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
-
-[time=5]
-== Creating a mobile app in Mobile Developer Console
-
-The Mobile Developer Console allows mobile developers to view available mobile services, connect them to their mobile apps and get the mobile app configurations.
-
-. Log in to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
-. Click *Create Mobile App* to register your mobile app.
-. Enter the following name for your mobile app:
-+
-----
-showcase-app
-----
-+
-. Click *Create*.
-+
-After the mobile app is registered, it is displayed on the console.
-. Click on the *showcase-app* card to display the configuration screen.
-. Click the *Mobile Services* tab.
-. Click *Bind to App* for *Data Sync* in the *Unbound Services* section.
-. Click `Next` on Binding screen.
-. When prompted for a *Server URL*, enter:
-+
-[subs="attributes+"]
-----
-{route-ionic-showcase-server-host}
-----
-. Click the *Create* button.
-. Navigate to the Configuration tab of the mobile app in the Mobile Developer Console.
-. Copy and save the `mobile-services.json` file, you will require this file in a later task.
-
 [time=10]
 == Build and run the mobile showcase app in a browser
 
@@ -159,39 +128,12 @@ It can run either as a hybrid mobile application, or a Progressive Web App (PWA)
 
 In this task, you build a PWA and run it in a browser.
 
-. Login to link:{che-url}[CodeReady Console, window="_blank"].
-. Download this link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template JSON file, window="_blank"].
-. Select *Factories* from the left hand menu.
-. Click *Create Factory* if prompted.
-. Enter the following as the *Name*:
-+
-----
-showcase-app
-----
-. In the *Source* section, select the *Config* tab.
+. Go to https://github.com/aerogear/ionic-showcase git repository
+. Clone repository to local machine `git clone git@github.com:aerogear/ionic-showcase.git`
+. Execute `npm install` to install dependencies 
+. TODO - wrap app into docker image or.. run it localy as we do in modern-app-dev workshop
 
-. Click *Upload File* and upload the file you downloaded in step 2.
-
-. Select *Create*.
-This creates a new CodeReady workspace named `ionic-showcase`.
-
-. Click *OPEN* to navigate to the `ionic-showcase` workspace.
-Initializing and starting the workspace can take a few minutes.
-
-. Edit the `src/mobile-services.json` file.
-
-. Paste the contents of the `mobile-services.json` file you saved earlier, replacing any text already there.
-The file is automatically saved.
-
-. Access the *Commands Palette* using Shift F10.
-
-. Choose *build* from the command palette menu.
-This installs required dependencies.
-
-. Choose *serve*  from the command palette menu.
-This starts a web server to serve the PWA.
-
-. Click the URL displayed in the *serve* terminal console.
+. Click the URL
 The showcase app is displayed.
 
 . Select  *Manage Tasks* from the left hand menu.
