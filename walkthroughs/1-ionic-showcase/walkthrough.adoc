@@ -175,7 +175,7 @@ In this task, you use the Identity Management service to protect both the client
 . Save and wait for server to redeploy
 
 
-=== Configure Identity Management service for the showcase client and server applications
+=== Configure Identity Management service for the showcase client applications
 
 . Navigate to keycloak realm to create new client.
  
