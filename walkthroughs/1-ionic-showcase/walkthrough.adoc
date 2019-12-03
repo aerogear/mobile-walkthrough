@@ -6,15 +6,15 @@
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This Solution Pattern demonstrates running the GraphQL PWA Showcase Application using Red Hat Mobile Developer Services.
+This Solution pattern demonstrates running the GraphQL PWA Showcase Application using Red Hat Mobile Developer Services.
 
-Solution Pattern will show you how to:
+It will show you how to:
 
-* Build and run the link:{showcase-app-link}[Ionic Mobile Showcase app].
+* Build and run the link:{showcase-app-link}[Ionic based GraphQL Client app].
 * Deploy the data sync server of the GraphQL Showcase app.
-* Protect the Showcase GraphQL app and the backend service using the Red Hat SSO.
+* Protect the showcase GraphQL app and the backend service using the Red Hat SSO.
 
-It will also introduce you to all features offered by the DataSync framework.
+It will also introduce you to all features offered by the AeroGear Data Sync framework.
 
 image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
