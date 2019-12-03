@@ -108,7 +108,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=10]
-== Access Showcase PWA App in a browser
+== Access the showcase app in a browser
 
 The showcase app demonstrates the key capabilities provided by {mobile-services-name}.
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
