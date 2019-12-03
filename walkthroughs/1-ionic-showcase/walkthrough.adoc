@@ -113,7 +113,6 @@ Verify that you followed each step in the procedure above.  If you are still hav
 The showcase app demonstrates the key capabilities provided by AeroGear Data Sync framework
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-In this task, we will access PWA application that is hosted by server side container that you can run in your browser.
 
 . Go to link:{route-ionic-showcase-server-host}[GraphQL playground, window="_blank"]
 . Select  *Manage Tasks* from the left hand menu.
