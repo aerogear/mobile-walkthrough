@@ -132,11 +132,11 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=15]
-== Protect the mobile showcase app using the Identity Management service
+== Protect the GraphQL showcase app using the Red Hat SSO
 
-In this task, you use the Identity Management service to protect both the client (PWA) and the data sync server.
+In this task, you use the Red Hat SSO to protect both the client (PWA) and the data sync server.
 
-=== Add Identity Management service to the client app (PWA) and create a realm for users
+=== Connect SSO to the client app
 
 . Make sure you have access to a realm in the user-facing SSO instance. If you don't have access, you can ask your customer-admin user to create one for you. 
 . In new realm we going to create two new clients - one for server side and one for the client side application.
@@ -175,15 +175,9 @@ In this task, you use the Identity Management service to protect both the client
 . Save and wait for server to redeploy
 
 
-=== Configure Identity Management service for the showcase client applications
+=== Connect SSO to the server app
 
 . Navigate to keycloak realm to create new client.
- 
-+
-----
-admin
-----
-
 . Create a new client for the showcase data sync server:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
