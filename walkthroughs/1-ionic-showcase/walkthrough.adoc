@@ -6,13 +6,13 @@
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This Solution Pattern demonstrates running the Mobile PWA Showcase Application using Red Hat Mobile Developer Services.
+This Solution Pattern demonstrates running the GraphQL PWA Showcase Application using Red Hat Mobile Developer Services.
 
 Solution Pattern will show you how to:
 
 * Build and run the link:{showcase-app-link}[Ionic Mobile Showcase app].
-* Deploy the data sync server of the Mobile Showcase app.
-* Protect the showcase mobile app and the backend service using the Red Hat SSO.
+* Deploy the data sync server of the GraphQL Showcase app.
+* Protect the Showcase GraphQL app and the backend service using the Red Hat SSO.
 
 It will also introduce you to all features offered by the DataSync framework.
 
@@ -66,7 +66,7 @@ query listTasks {
 }
 
 mutation createTask {
-  createTask(title: "complete the walkthrough", description: "complete the mobile walk through") {
+  createTask(title: "complete the walkthrough", description: "complete the GraphQL walkthrough") {
     title,
     description,
     version,
@@ -91,7 +91,7 @@ The system should create a task.
         "allTasks": [
             {
                 "title": "complete the walkthrough",
-                "description": "complete the mobile walk through",
+                "description": "complete the GraphQL walkthrough",
                 "id": "1"
             }
         ]
