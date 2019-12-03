@@ -139,46 +139,44 @@ In this task, you use the Identity Management service to protect both the client
 
 === Add Identity Management service to the client app (PWA) and create a realm for users
 
-. Navigate to the link:{mdc-url}[Mobile Developer Console, window="_blank"].
-. Click on the *showcase-app* card to display the configuration screen.
-. Click the *Mobile Services* tab.
-. Click *Bind to App* for *Identity Management* in the *Unbound Services* section and then click the *next* button.
-.. When prompted for an *Admin User Name* enter:
-+
-----
-admin
-----
-.. When prompted for an *Admin User Password* enter:
-+
-----
-admin
-----
-. Complete the wizard.
-This process also creates a new realm in the {customer-sso-name}.
+. As your admin to create new realm for your user and obtain url to be able to login to the keycloak instance
+. In new realm we going to create two new clients - one for server side and one for the client side application.
+. Open URL obtained from adminstrator
+. Login to keycloak (you will be asked to provide additional details like email and name)
+. When completing login process you should see the main keycloak realm page
+. In the right menu choose *Clients* under *Configure* in the menu.
+.. Click on the *Create* button on the top-right corner to start creating a new client.
+.. Enter `showcase-app-client` for Client ID.  Do not change the rest of the fields.
+.. Save the client. You should see the *Settings* page of the client.
+.. You should see the *Settings* page of the client.
+.. Change the `Valid Redirect URIs` to '{route-ionic-showcase-server-host}*'
+.. Change the `Web Origins` to '*'
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
 
-. Navigate to the *Configuration* tab of the *mobile app* in the Mobile Developer Console.
+. Navigate to the project config-maps section {openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps
+. Select `webapp-config`
+. Add new `auth` section in config by utilizing the config that was copied in previous step.
+. Configuration should look as follows
 
-. Copy and save the `mobile-services.json` file, you will require this file in a later task.
+---
+    window.showcaseConfig = {
+      "backend": {
+        "serverUrl": "/graphql",
+        "wsServerUrl": ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql"
+      }
+      "auth": {
+        // Your keycloak config here
+      }
+    };
+---
 
-[type=verification]
-****
-Is *Identity Management* row listed the `Bound Services` section for *showcase-app*?
-****
+. Save and wait for server to redeploy
 
-[type=verificationFail]
-****
-Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-****
 
 === Configure Identity Management service for the showcase client and server applications
 
-. Navigate to the *Mobile Services* tab.
-
-. Expand the *Identity Management* section.
-
-. Click the *Keycloak Realm URL* to open the {customer-sso-name} Admin Console.
-
-. Log in using the following for both username and password:
+. Navigate to keycloak realm to create new client.
+ 
 +
 ----
 admin
@@ -254,51 +252,6 @@ Has the deployment completed?
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
-
-
-=== Update the config of the showcase client app and run it
-
-. Navigate to link:{che-url}[CodeReady Console, window="_blank"]
-
-. Navigate to the `ionic-showcase` workspace.
-Starting the workspace can take a few minutes.
-
-. Edit the `src/mobile-services.json` file.
-
-. Paste the contents of the `mobile-services.json` file you saved earlier.
-The file is automatically saved.
-
-. Access the *Commands Palette* using Shift F10.
-
-. Choose *build* from the command palette menu.
-This installs required dependencies.
-
-. Choose *serve*  from the command palette menu.
-This starts a web server to serve the PWA.
-
-. Update the client in {customer-sso-name} service to add a new redirect url
-
-.. Copy the URL displayed in the *serve* terminal console.
-.. Navigate to the {customer-sso-name} Admin Console, and choose `Configure -> clients` in the menu.
-.. Select the client with ID `showcase-app-client`.
-.. Add the copied URL as a new value to the `Valid Redirect URIs` field and place an asterisk (*) at the end of the URL.  Save it.
-
-. Navigate to the CodeReady console and click on the URL displayed in the *serve* terminal console, or open the copied url in a new tab.
-
-. Log in with the user credentials you created earlier.
-
-[type=verification]
-****
-Are you able to successfully log in?
-****
-
-[type=verificationFail]
-****
-Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
-****
-
-
-
 [time=10]
 == Exploring data sync features using the showcase app
 
@@ -331,7 +284,6 @@ Did the tasks appear as expected?
 ****
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
-
 
 
 === Demonstrationg offline support
