@@ -138,7 +138,7 @@ In this task, you use the Identity Management service to protect both the client
 
 === Add Identity Management service to the client app (PWA) and create a realm for users
 
-. As your admin to create new realm for your user and obtain url to be able to login to the keycloak instance
+. Make sure you have access to a realm in the user-facing SSO instance. If you don't have access, you can ask your customer-admin user to create one for you. 
 . In new realm we going to create two new clients - one for server side and one for the client side application.
 . Open URL obtained from adminstrator
 . Login to keycloak (you will be asked to provide additional details like email and name)
