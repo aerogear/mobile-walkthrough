@@ -6,15 +6,15 @@
 
 = Running the mobile showcase application with {mobile-services-name}
 
-This Solution Pattern demonstrates running the mobile showcase application using the services provided by Mobile Developer Services.
+This Solution Pattern demonstrates running the Mobile PWA Showcase Application using Red Hat Mobile Developer Services.
 
-It will show you how to:
+Solution Pattern will show you how to:
 
-* Build and run the link:{showcase-app-link}[Ionic mobile showcase app].
-* Deploy the data sync server of the mobile showcase app.
-* Protect the showcase mobile app and the backend service using the Identity Management service.
+* Build and run the link:{showcase-app-link}[Ionic Mobile Showcase app].
+* Deploy the data sync server of the Mobile Showcase app.
+* Protect the showcase mobile app and the backend service using the Red Hat SSO.
 
-It will also introduce you to all features offered by the data sync framework.
+It will also introduce you to all features offered by the DataSync framework.
 
 image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
@@ -25,24 +25,11 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 * link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
 ****
 
-[type=walkthroughResource]
-.Mobile Developer Console
-****
-* link:{mdc-url}[Mobile Developer Console, window="_blank"]
-****
 
 [type=walkthroughResource]
 .Mobile Developer Services Documentation
 ****
 * link:https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/getting_started_with_mobile_developer_services/index[Getting Started with Mobile Developer Services, window="_blank"]
-****
-
-[type=walkthroughResource,serviceName=codeready]
-.CodeReady Workspaces
-****
-* link:{che-url}[Console, window="_blank"]
-* link:https://developers.redhat.com/products/codeready-workspaces/overview/[Overview, window="_blank"]
-* link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces[Documentation, window="_blank"]
 ****
 
 :sectnums:
@@ -121,23 +108,15 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=10]
-== Build and run the mobile showcase app in a browser
+== Access Showcase PWA App in a browser
 
 The showcase app demonstrates the key capabilities provided by {mobile-services-name}.
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-In this task, you build a PWA and run it in a browser.
+In this task, we will access PWA application that is hosted by server side container that you can run in your browser.
 
-. Go to https://github.com/aerogear/ionic-showcase git repository
-. Clone repository to local machine `git clone git@github.com:aerogear/ionic-showcase.git`
-. Execute `npm install` to install dependencies 
-. TODO - wrap app into docker image or.. run it localy as we do in modern-app-dev workshop
-
-. Click the URL
-The showcase app is displayed.
-
+. Go to link:{route-ionic-showcase-server-host}[GraphQL playground, window="_blank"]
 . Select  *Manage Tasks* from the left hand menu.
-
 
 [type=verification]
 ****
