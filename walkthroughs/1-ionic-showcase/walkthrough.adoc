@@ -110,7 +110,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 [time=10]
 == Access the showcase app in a browser
 
-The showcase app demonstrates the key capabilities provided by {mobile-services-name}.
+The showcase app demonstrates the key capabilities provided by AeroGear Data Sync framework
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
 In this task, we will access PWA application that is hosted by server side container that you can run in your browser.
