@@ -114,7 +114,7 @@ The showcase app demonstrates the key capabilities provided by AeroGear Data Syn
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
 
-. Go to link:{route-ionic-showcase-server-host}[GraphQL playground, window="_blank"]
+. Go to link:{route-ionic-showcase-server-host}[Showcase app, window="_blank"]
 . Select  *Manage Tasks* from the left hand menu.
 
 [type=verification]
