@@ -140,7 +140,6 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 .. Click on the *Create* button on the top-right corner to create a new client.
 .. Enter `showcase-app-client` for Client ID. Do not change any other fields.
 .. Save the client. You should see the *Settings* page of the client.
-.. You should see the *Settings* page of the client.
 .. Change `Valid Redirect URIs` to '{route-ionic-showcase-server-host}*'
 .. Change `Web Origins` to '*'
 .. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file.
