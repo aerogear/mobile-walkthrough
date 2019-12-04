@@ -1,20 +1,20 @@
 :showcase-app-link: https://github.com/aerogear/ionic-showcase
 :integreatly-name: Managed Integration
-:mobile-services-name: Mobile Developer Services
-:crw-name: CodeReady Workspaces
+:data-sync-name: AeroGear Data Sync
+:data-sync-showcase-app: AeroGear Data Sync showcase application
 :customer-sso-name: End user SSO instance
 
-= Running the mobile showcase application with {mobile-services-name}
+= About this solution pattern
 
-This Solution pattern demonstrates running the GraphQL PWA Showcase Application using Red Hat Mobile Developer Services.
+{data-sync-name} is a framework that helps developers build applications that can perform realtime data synchronization with GraphQL.
+ 
+This solution pattern will show you how to:
 
-It will show you how to:
+* Configure and run the link:{showcase-app-link}[{data-sync-showcase-app}] on OpenShift.
+* Protect the application's frontend and backend using Red Hat SSO.
+* Explore all the capabilities provided by {data-sync-name}.
 
-* Build and run the link:{showcase-app-link}[Ionic based GraphQL Client app].
-* Deploy the data sync server of the GraphQL Showcase app.
-* Protect the showcase GraphQL app and the backend service using the Red Hat SSO.
-
-It will also introduce you to all features offered by the AeroGear Data Sync framework.
+The following diagram shows the architecture of the {data-sync-showcase-app}:
 
 image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
@@ -27,33 +27,29 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
 
 [type=walkthroughResource]
-.Mobile Developer Services Documentation
+.{data-sync-name} Documentation
 ****
-* link:https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/getting_started_with_mobile_developer_services/index[Getting Started with Mobile Developer Services, window="_blank"]
+* link:https://github.com/aerogear/voyager-server/tree/master/doc[Getting Started with {data-sync-name}, window="_blank"]
 ****
 
 :sectnums:
 
 [time=10]
-== Deploying the Showcase Data Sync server
-
-You first need to deploy the data sync server of the showcase app.
+== Deploying the {data-sync-showcase-app}
 
 . Login to the link:{openshift-host}/console[OpenShift Console, window="_blank"]
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[mobile project, window="_blank"] in OpenShift.
-. Click the *Browse Catalog* button.
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[project, window="_blank"] in OpenShift.
+. Click on the *Browse Catalog* button.
 . Search the service catalog for 'Data Sync Showcase'.
-
 . Click on the 'Data Sync Showcase' entry to add it to your project.
-
 . Accept all the defaults of the provisioning wizard and click *Create*.
-
 . Check the *Overview* screen of your project and wait until three pods are running:
 +
 * `ionic-showcase-server` - a Node.js server and client application
 * `mosquitto-mqtt-broker` - a message broker
-* `postgresql` - a database.
+* `postgresql` - a database
 
+Then you can use the build-in GraphQL playground to interact with the server API:
 . Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and remove any text in the left pane of the screen. Paste the following query/mutation into the left pane of the screen:
 +
 ----
@@ -107,14 +103,14 @@ It should include the string `+connected to messaging service+`.
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
-[time=10]
-== Access the showcase app in a browser
+[time=5]
+== Access the client app in a browser
 
-The showcase app demonstrates the key capabilities provided by AeroGear Data Sync framework
-It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
+The showcase app demonstrates the key capabilities provided by the {data-sync-name} framework.
+It can be run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-. Go to link:{route-ionic-showcase-server-host}[Showcase app, window="_blank"]
-. Select  *Manage Tasks* from the left hand menu.
+. Go to link:{route-ionic-showcase-server-host}[the client app, window="_blank"]
+. Select *Manage Tasks* from the left hand menu.
 
 [type=verification]
 ****
@@ -131,32 +127,32 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=15]
-== Protect the GraphQL showcase app using the Red Hat SSO
+== Protect the showcase app using the Red Hat SSO
 
-In this task, you use the Red Hat SSO to protect both the client (PWA) and the data sync server.
+In this task, we will protect both the frontend and the backend of the {data-sync-showcase-app} with the {customer-sso-name}.
 
-=== Connect SSO to the client app
+=== Configure and protect the frontend app
 
-. Make sure you have access to a realm in the user-facing SSO instance. If you don't have access, you can ask your customer-admin user to create one for you. 
-. In new realm we going to create two new clients - one for server side and one for the client side application.
-. Open URL obtained from adminstrator
-. Login to keycloak (you will be asked to provide additional details like email and name)
-. When completing login process you should see the main keycloak realm page
-. In the right menu choose *Clients* under *Configure* in the menu.
+. Make sure you have access to a realm in the {customer-sso-name}. If you don't, you can ask your customer-admin user to create one for you. 
+. Login to the realm in the {customer-sso-name}.
+. Create a new client for the frondend:
+.. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
 .. Enter `showcase-app-client` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. You should see the *Settings* page of the client.
 .. Change the `Valid Redirect URIs` to '{route-ionic-showcase-server-host}*'
 .. Change the `Web Origins` to '*'
-.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file.
 
-. Navigate to the project config-maps section {openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps
-. Select `webapp-config`
-. Add new `auth` section in config by utilizing the config that was copied in previous step.
-. In configuration replace `auth-server-url` to `url` and `resource` to `clientId`.
-Configuration should look as follows:
-+
+Next we need to update the configuration of the frontend app to secure it:
+
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+. Select the config map that is called `webapp-config`, and edit it.
+. Add a new `auth` section by pasting the content that was copied in the previous step.
+.. You should then replace `auth-server-url` to `url` and `resource` to `clientId`.
+. The content of the config map should look as follows:
+
 ---
     window.showcaseConfig = {
       "backend": {
@@ -170,29 +166,30 @@ Configuration should look as follows:
       }
     };
 ---
-+
-. Save and wait for server to redeploy
 
-=== Connect Single SignOn to the server app
+. Save it and wait for the app to be re-deployed.
 
-. Navigate to SSO realm to create new client.
-. Create a new client for the showcase data sync server:
+=== Configure and protect the backend app
+
+. Login to the realm in the {customer-sso-name}.
+. Create a new client for the backend:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
 .. Enter `showcase-app-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only` and save again.
-.. Click on the *Installation* tab, and select `OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
+.. Click on the *Installation* tab, and select `OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file to a directory on the computer.
 
-. Create some users for the showcase app:
-.. Select *Users* on the left menu, and click on *View all users*.
-.. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
-.. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
+In order to use the application, we also need to create a few users so that we can login:
 
-. Update the showcase sync server app to use the downloaded configuration file:
-.. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
-.. Click *Create Config Map*.
-.. When prompted for *Name*, enter:
+. Select *Users* on the left menu, and click on *View all users*.
+. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
+. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
+
+At last, we will update the backend to use the downloaded configuration file:
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+. Click *Create Config Map*.
+. When prompted for *Name*, enter:
 +
 ----
 showcase-server-idm-config
@@ -249,12 +246,12 @@ Verify that you followed each step in the procedure above.  If you are still hav
 [time=10]
 == Exploring data sync features using the showcase app
 
-To explore data sync features, run the multiple instances of the data sync app using different browsers.
+To explore data sync features, you should run multiple instances of the showcase app using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
-=== Demonstrating real-time sync
+=== Real-time sync
 
 . On your laptop:
 .. Select *Manage Tasks*.
@@ -280,7 +277,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 
-=== Demonstrationg offline support
+=== Offline support
 
 . On your mobile device:
 .. Log into the showcase app.
@@ -314,7 +311,7 @@ Did the tasks appear as expected?
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 
-=== Avoiding and resolving conflicts
+=== Resolving conflicts
 
 . On your mobile device:
 .. Log into the showcase app.
