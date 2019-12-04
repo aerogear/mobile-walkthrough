@@ -135,7 +135,7 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 
 . Make sure you have access to a realm in the {customer-sso-name}. If you don't, you can ask your customer-admin user to create one for you. 
 . Login to the realm in the {customer-sso-name}.
-. Create a new client for the frondend:
+. Create a new client for the frontend app:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
 .. Enter `showcase-app-client` for Client ID.  Do not change the rest of the fields.
@@ -152,7 +152,7 @@ Next we need to update the configuration of the frontend app to secure it:
 . Add a new `auth` section by pasting the content that was copied in the previous step.
 .. You should then replace `auth-server-url` to `url` and `resource` to `clientId`.
 . The content of the config map should look as follows:
-
++
 ---
     window.showcaseConfig = {
       "backend": {
@@ -166,7 +166,7 @@ Next we need to update the configuration of the frontend app to secure it:
       }
     };
 ---
-
++
 . Save it and wait for the app to be re-deployed.
 
 === Configure and protect the backend app
