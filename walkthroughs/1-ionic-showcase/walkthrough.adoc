@@ -50,7 +50,7 @@ You first need to deploy the data sync server of the showcase app.
 
 . Check the *Overview* screen of your project and wait until three pods are running:
 +
-* `ionic-showcase-server` - a Node.js app
+* `ionic-showcase-server` - a Node.js server and client application
 * `mosquitto-mqtt-broker` - a message broker
 * `postgresql` - a database.
 
@@ -113,7 +113,6 @@ Verify that you followed each step in the procedure above.  If you are still hav
 The showcase app demonstrates the key capabilities provided by AeroGear Data Sync framework
 It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-
 . Go to link:{route-ionic-showcase-server-host}[Showcase app, window="_blank"]
 . Select  *Manage Tasks* from the left hand menu.
 
@@ -155,9 +154,9 @@ In this task, you use the Red Hat SSO to protect both the client (PWA) and the d
 . Navigate to the project config-maps section {openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps
 . Select `webapp-config`
 . Add new `auth` section in config by utilizing the config that was copied in previous step.
-. In configuration replace `auth-server-url` to `url` and `resource` to `clientId`
-. Configuration should look as follows
-
+. In configuration replace `auth-server-url` to `url` and `resource` to `clientId`.
+Configuration should look as follows:
++
 ---
     window.showcaseConfig = {
       "backend": {
@@ -171,20 +170,19 @@ In this task, you use the Red Hat SSO to protect both the client (PWA) and the d
       }
     };
 ---
-
++
 . Save and wait for server to redeploy
 
+=== Connect Single SignOn to the server app
 
-=== Connect SSO to the server app
-
-. Navigate to keycloak realm to create new client.
+. Navigate to SSO realm to create new client.
 . Create a new client for the showcase data sync server:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
 .. Enter `showcase-app-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only` and save again.
-.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
+.. Click on the *Installation* tab, and select `OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
 
 . Create some users for the showcase app:
 .. Select *Users* on the left menu, and click on *View all users*.
@@ -240,7 +238,7 @@ Wait for the deployment to complete and the showcase data sync server is running
 
 [type=verification]
 ****
-Has the deployment completed?
+Has the deployment completed? Do you see SSO login screen when refreshing application?
 ****
 
 [type=verificationFail]
