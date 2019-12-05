@@ -1,12 +1,12 @@
 :showcase-app-link: https://github.com/aerogear/ionic-showcase
 :integreatly-name: Managed Integration
-:data-sync-name: AeroGear Data Sync
-:data-sync-showcase-app: AeroGear Data Sync showcase application
+:data-sync-name: Red Hat Data Sync
+:data-sync-showcase-app: Data Sync showcase application
 :customer-sso-name: End user SSO instance
 
 = About this solution pattern
 
-{data-sync-name} is a framework that helps developers build applications that can perform realtime data synchronization with GraphQL.
+Red Hat Data Sync is a framework that helps developers build applications that can perform realtime data synchronization with GraphQL.
  
 This solution pattern will show you how to:
 
@@ -20,24 +20,23 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
 
 [type=walkthroughResource, serviceName=openshift]
-.Mobile Project in OpenShift
+.Project in OpenShift
 ****
 * link:{openshift-host}/console/project/{walkthrough-namespace}/overview[OpenShift Project, window="_blank"]
 ****
 
 
 [type=walkthroughResource]
-.{data-sync-name} Documentation
+.Red Hat Data Sync Documentation
 ****
-* link:https://github.com/aerogear/voyager-server/tree/master/doc[Getting Started with {data-sync-name}, window="_blank"]
+* link:https://access.redhat.com/documentation/en-us/red_hat_build_of_node.js/10/html-single/node.js_runtime_guide/index[Getting Started with {data-sync-name}, window="_blank"]
 ****
 
 :sectnums:
 
 [time=10]
-== Deploying the {data-sync-showcase-app}
+== Deploying the showcase application
 
-. Login to the link:{openshift-host}/console[OpenShift Console, window="_blank"]
 . Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[project, window="_blank"] in OpenShift.
 . Click on the *Browse Catalog* button.
 . Search the service catalog for 'Data Sync Showcase'.
