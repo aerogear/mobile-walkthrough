@@ -1,12 +1,12 @@
 :showcase-app-link: https://github.com/aerogear/ionic-showcase
 :integreatly-name: Managed Integration
-:data-sync-name: RHMI Data Sync
+:data-sync-name: Data Sync
 :data-sync-showcase-app: Data Sync showcase application
 :customer-sso-name: End user SSO instance
 
 = About this solution pattern
 
-RHMI Data Sync is a framework that helps developers build applications that can perform realtime data synchronization with GraphQL.
+Data Sync is a framework that helps developers build applications that can perform realtime data synchronization with GraphQL.
  
 This solution pattern will show you how to:
 
@@ -27,7 +27,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 
 
 [type=walkthroughResource]
-.RHMI Data Sync Documentation
+.Data Sync Documentation
 ****
 * link:https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/developing_a_data_sync_app/index[Getting Started with {data-sync-name}, window="_blank"]
 ****
