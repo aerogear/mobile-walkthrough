@@ -156,7 +156,7 @@ Next we need to update the configuration of the frontend app to secure it:
       "backend": {
         "serverUrl": "/graphql",
         "wsServerUrl": ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql"
-      }
+      },
       "auth": {
         "realm": "<your realm>",
         "url": "https://your-server/auth",
