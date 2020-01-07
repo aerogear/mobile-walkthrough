@@ -129,8 +129,8 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 
 === Configure and protect the frontend app
 
-. Make sure you have access to a realm in the {customer-sso-name}. If you don't, you can ask your customer-admin user to create one for you. 
-. Login to the realm in the {customer-sso-name}.
+. Make sure you have access to a realm in the link:{sso-realm-url}[SSO Realm, window="_blank"]. If you do not, you can ask your customer-admin user to create one for you. 
+. Login to the realm in the link:{sso-realm-url}[SSO Realm, window="_blank"].
 . Create a new client for the frontend app:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to create a new client.
@@ -166,7 +166,7 @@ Next we need to update the configuration of the frontend app to secure it:
 
 === Configure and protect the backend app
 
-. Login to the realm in the {customer-sso-name}.
+. Login to the realm in the link:{sso-realm-url}[SSO Realm, window="_blank"].
 . Create a new client for the backend:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
