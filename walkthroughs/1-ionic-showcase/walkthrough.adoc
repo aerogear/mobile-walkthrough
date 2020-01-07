@@ -37,7 +37,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 [time=10]
 == Deploying the showcase application
 
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[project, window="_blank"] in OpenShift.
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[project console, window="_blank"] in OpenShift.
 . Click on the *Browse Catalog* button.
 . Search the service catalog for 'Data Sync Showcase'.
 . Click on the 'Data Sync Showcase' entry to add it to your project.
