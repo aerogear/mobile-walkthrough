@@ -105,14 +105,14 @@ Verify that you followed each step in the procedure above.  If you are still hav
 The showcase app demonstrates the key capabilities provided by the {data-sync-name} framework.
 It can be run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-. Go to link:{route-ionic-showcase-server-host}[the client app, window="_blank"]
+. Go to the link:{route-ionic-showcase-server-host}[newly created client app, window="_blank"]
 . Select *Manage Tasks* from the left hand menu.
 
 [type=verification]
 ****
 . Create a task by clicking on the plus icon in the top right-hand side of the screen.
-. Add a title and description to the task and click *Create*.
-. Open the same URL in a different tab.
+. Add a title and description, of your choosing, to the task and click *Create*.
+. Open the link:{route-ionic-showcase-server-host}[tasks section of the client app, window="_blank"] in a different tab.
 . Change the status of the task by clicking/unclicking the text box beside the task.
 . Verify that the status of the task is synced across all tabs in real-time.
 ****
