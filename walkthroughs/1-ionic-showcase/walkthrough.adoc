@@ -48,8 +48,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 * `mosquitto-mqtt-broker` - a message broker
 * `postgresql` - a database
 
-Then you can use the build-in GraphQL playground to interact with the server API:
-. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and remove any text in the left pane of the screen. Paste the following query/mutation into the left pane of the screen:
+You can use the build-in GraphQL playground to interact with the server API. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and remove any text in the left pane of the screen. Paste the following query/mutation into the left pane of the screen:
 +
 ----
 query listTasks {
@@ -69,8 +68,6 @@ mutation createTask {
   }
 }
 ----
-+
-The query and mutation code can be used to verify your environment.
 
 [type=verification]
 ****
