@@ -131,11 +131,11 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 === Configure and protect the frontend app
 
 . Make sure you have access to a realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"]. If you do not, you can ask your customer-admin user to create one for you. 
-. Login to the realm in the link:{sso-realm-url}[SSO Realm, window="_blank"].
+. Login to the realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"].
 . Create a new client for the frontend app:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to create a new client.
-.. Enter `showcase-app-client` for Client ID. Do not change any other fields.
+.. Enter `{user-username}-frontend` for Client ID. Do not change any other fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change `Valid Redirect URIs` to '{route-ionic-showcase-server-host}*'
 .. Change `Web Origins` to '*'
@@ -149,19 +149,21 @@ Next we need to update the configuration of the frontend app to secure it:
 .. You should then replace `auth-server-url` to `url` and `resource` to `clientId`.
 . The content of the config map should look as follows:
 +
----
-    window.showcaseConfig = {
-      "backend": {
-        "serverUrl": "/graphql",
-        "wsServerUrl": ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql"
-      },
-      "auth": {
-        "realm": "<your realm>",
-        "url": "https://your-server/auth",
-        "clientId": "<your-client>"
-      }
-    };
----
+[subs="attributes"]
+----
+   window.showcaseConfig = {
+     "backend": {
+       "serverUrl": "/graphql",
+       "wsServerUrl": ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql"
+     },
+     "auth": {
+       "realm": "walkthroughs",
+       "url": "https://your-server/auth",
+       "clientId": "{user-username}-frontend"
+     }
+   };
+----
+
 +
 . Save it and wait for the app to be re-deployed.
 
@@ -171,7 +173,7 @@ Next we need to update the configuration of the frontend app to secure it:
 . Create a new client for the backend:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
-.. Enter `showcase-app-server` for Client ID.  Do not change the rest of the fields.
+.. Enter `{user-username}-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only` and save again.
 .. Click on the *Installation* tab, and select `OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file to a directory on the computer.
