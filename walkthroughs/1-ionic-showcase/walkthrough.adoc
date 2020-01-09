@@ -2,7 +2,8 @@
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-showcase-app: Data Sync showcase application
-:customer-sso-name: End user SSO instance
+:customer-sso-name: Customer Application SSO instance
+:sso-realm-url: {user-sso-url}/auth/admin/walkthroughs/console/index.html
 
 = Adding Data Sync to your Application with GraphQL
 
@@ -49,7 +50,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 * `postgresql` - a database
 
 You can use the build-in GraphQL playground to interact with the server API. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and remove any text in the left pane of the screen. Paste the following query/mutation into the left pane of the screen:
-+
+
 ----
 query listTasks {
   allTasks {
@@ -129,7 +130,7 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 
 === Configure and protect the frontend app
 
-. Make sure you have access to a realm in the link:{sso-realm-url}[SSO Realm, window="_blank"]. If you do not, you can ask your customer-admin user to create one for you. 
+. Make sure you have access to a realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"]. If you do not, you can ask your customer-admin user to create one for you. 
 . Login to the realm in the link:{sso-realm-url}[SSO Realm, window="_blank"].
 . Create a new client for the frontend app:
 .. Choose *Clients* under *Configure* in the menu.
@@ -166,7 +167,7 @@ Next we need to update the configuration of the frontend app to secure it:
 
 === Configure and protect the backend app
 
-. Login to the realm in the link:{sso-realm-url}[SSO Realm, window="_blank"].
+. Login to the realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"].
 . Create a new client for the backend:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
