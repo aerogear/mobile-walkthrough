@@ -48,6 +48,8 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 * `ionic-showcase-server` - a Node.js server and client application
 * `mosquitto-mqtt-broker` - a message broker
 * `postgresql` - a database
++
+Once the pods are running, you can use the GraphQL playground to interact with the server API as described in the next step.
 
 . Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and replace the text in the left pane of the screen with the following query and mutation::
 
