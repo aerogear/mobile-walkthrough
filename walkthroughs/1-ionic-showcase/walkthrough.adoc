@@ -161,7 +161,7 @@ Next we need to update the configuration of the frontend app to secure it:
        "realm": "walkthroughs",
     	 "url": " {user-sso-url}/auth",
    	   "ssl-required": "none",
-   	   "clientId": "{user-username}-client",
+   	   "clientId": "{user-username}-frontend",
    	   "public-client": true,
    	   "confidential-port": 0
      }
