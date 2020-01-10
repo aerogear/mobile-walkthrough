@@ -142,14 +142,14 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 .. Click on the *Save* button
 .. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content displayed or use the `Download` button to save the configuration file.
 
-Next we need to update the configuration of the frontend app to secure it:
-
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
-. Select the config map that is called `webapp-config`, and edit it by selecting `Edit` under the `Actions` button.
-. Add a new `auth` section by pasting the content that was copied in the previous step.
-.. You should then replace `auth-server-url` to `url` and `resource` to `clientId`.
-. The content of the config map should look as follows:
-+
+. Update the configuration of the frontend app to secure it:
+.. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+.. Select the config map that is called `webapp-config`, and edit it by selecting `Edit` under the `Actions` button.
+.. Add a new `auth` section to the config map by pasting the content that was copied in the previous step.
+.. Rename the `auth-server-url` attribute to `url` and the `resource` attribute to `clientId`.
+[type=verification]
+****
+Does the content of the config map look as follows:
 [subs="attributes"]
 ----
    window.showcaseConfig = {
@@ -167,9 +167,14 @@ Next we need to update the configuration of the frontend app to secure it:
      }
    };
 ----
+****
 
-+
-. Save it and wait for the app to be re-deployed.
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+
+Save it and wait for the app to be re-deployed.
 
 === Configure and protect the backend app
 
