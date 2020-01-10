@@ -133,18 +133,19 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 . Make sure you have access to a realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"]. If you do not, you can ask your customer-admin user to create one for you. 
 . Login to the realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"].
 . Create a new client for the frontend app:
-.. Choose *Clients* under *Configure* in the menu.
+.. Choose *Clients* under *Configure* in the menu on the left of the screen.
 .. Click on the *Create* button on the top-right corner to create a new client.
 .. Enter `{user-username}-frontend` for Client ID. Do not change any other fields.
 .. Save the client. You should see the *Settings* page of the client.
-.. Change `Valid Redirect URIs` to '{route-ionic-showcase-server-host}*'
-.. Change `Web Origins` to '*'
+.. Change `Valid Redirect URIs` to `{route-ionic-showcase-server-host}*`
+.. Change `Web Origins` to `*`
+.. Click on the *Save* button
 .. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file.
 
 Next we need to update the configuration of the frontend app to secure it:
 
 . Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
-. Select the config map that is called `webapp-config`, and edit it.
+. Select the config map that is called `webapp-config`, and edit it by selecting `Edit` under the `Actions` button.
 . Add a new `auth` section by pasting the content that was copied in the previous step.
 .. You should then replace `auth-server-url` to `url` and `resource` to `clientId`.
 . The content of the config map should look as follows:
@@ -158,8 +159,11 @@ Next we need to update the configuration of the frontend app to secure it:
      },
      "auth": {
        "realm": "walkthroughs",
-       "url": "https://your-server/auth",
-       "clientId": "{user-username}-frontend"
+    	 "url": " {user-sso-url}/auth",
+   	   "ssl-required": "none",
+   	   "clientId": "{user-username}-client",
+   	   "public-client": true,
+   	   "confidential-port": 0
      }
    };
 ----
@@ -184,11 +188,11 @@ In order to use the application, we also need to create a few users so that we c
 . Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
 . Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
 
-At last, we will update the backend to use the downloaded configuration file:
+Now, we will update the backend to use the downloaded configuration file:
 . Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
 . Click *Create Config Map*.
 . When prompted for *Name*, enter:
-+
+
 ----
 showcase-server-idm-config
 ----
