@@ -188,7 +188,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 .. Enter `{user-username}-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
 .. Change the `Access Type` to `bearer-only`
-.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the `keycloak.json` configuration file.
 
 In order to use the application, we also need to create some users so that we can login:
 
