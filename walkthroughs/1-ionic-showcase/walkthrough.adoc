@@ -106,7 +106,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 The showcase app demonstrates the key capabilities provided by the {data-sync-name} framework.
 It can be run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-. Go to the link:{route-ionic-showcase-server-host}[newly created client app, window="_blank"]
+. Navigate to the link:{route-ionic-showcase-server-host}[Data Sync application user interface, window="_blank"]
 . Select *Manage Tasks* from the left hand menu.
 
 [type=verification]
