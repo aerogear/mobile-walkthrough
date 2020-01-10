@@ -197,7 +197,7 @@ In order to use the application, we also need to create some users so that we ca
 
 Now, we will update the backend to use the downloaded configuration file:
 
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console]
 
 . Click *Create Config Map*.
 . When prompted for *Name*, enter:
@@ -261,6 +261,11 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 To explore data sync features, you should run multiple instances of the showcase app using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
+
+To get the url of your app:
+
+. Navigate to the {openshift-host}/console/project/{walkthrough-namespace}/browse/routes[Routes page of the OpenShift console]
+. Click on the `Hostname` of the ionic-showcase-server
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
