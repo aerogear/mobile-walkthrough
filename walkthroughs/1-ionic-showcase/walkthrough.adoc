@@ -2,7 +2,8 @@
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-showcase-app: Data Sync showcase application
-:customer-sso-name: End user SSO instance
+:customer-sso-name: Customer Application SSO instance
+:sso-realm-url: {user-sso-url}/auth/admin/walkthroughs/console/index.html
 
 = Adding Data Sync to your Application with GraphQL
 
@@ -37,7 +38,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 [time=10]
 == Deploying the showcase application
 
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[project, window="_blank"] in OpenShift.
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[project console, window="_blank"] in OpenShift.
 . Click on the *Browse Catalog* button.
 . Search the service catalog for 'Data Sync Showcase'.
 . Click on the 'Data Sync Showcase' entry to add it to your project.
@@ -47,10 +48,11 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 * `ionic-showcase-server` - a Node.js server and client application
 * `mosquitto-mqtt-broker` - a message broker
 * `postgresql` - a database
-
-Then you can use the build-in GraphQL playground to interact with the server API:
-. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and remove any text in the left pane of the screen. Paste the following query/mutation into the left pane of the screen:
 +
+Once the pods are running, you can use the GraphQL playground to interact with the server API as described in the next step.
+
+. Navigate to the link:{route-ionic-showcase-server-host}/graphql[GraphQL playground, window="_blank"] and replace the text in the left pane of the screen with the following query and mutation::
+
 ----
 query listTasks {
   allTasks {
@@ -69,8 +71,6 @@ mutation createTask {
   }
 }
 ----
-+
-The query and mutation code can be used to verify your environment.
 
 [type=verification]
 ****
@@ -108,14 +108,14 @@ Verify that you followed each step in the procedure above.  If you are still hav
 The showcase app demonstrates the key capabilities provided by the {data-sync-name} framework.
 It can be run either as a hybrid mobile application, or a Progressive Web App (PWA).
 
-. Go to link:{route-ionic-showcase-server-host}[the client app, window="_blank"]
+. Navigate to the link:{route-ionic-showcase-server-host}[Data Sync application user interface, window="_blank"]
 . Select *Manage Tasks* from the left hand menu.
 
 [type=verification]
 ****
 . Create a task by clicking on the plus icon in the top right-hand side of the screen.
-. Add a title and description to the task and click *Create*.
-. Open the same URL in a different tab.
+. Add a title and description, of your choosing, to the task and click *Create*.
+. Open the link:{route-ionic-showcase-server-host}[tasks section of the client app, window="_blank"] in a different tab.
 . Change the status of the task by clicking/unclicking the text box beside the task.
 . Verify that the status of the task is synced across all tabs in real-time.
 ****
@@ -132,103 +132,120 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 
 === Configure and protect the frontend app
 
-. Make sure you have access to a realm in the {customer-sso-name}. If you don't, you can ask your customer-admin user to create one for you. 
-. Login to the realm in the {customer-sso-name}.
+. Login to the realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"].
 . Create a new client for the frontend app:
-.. Choose *Clients* under *Configure* in the menu.
+.. Choose *Clients* under *Configure* in the menu on the left of the screen.
 .. Click on the *Create* button on the top-right corner to create a new client.
-.. Enter `showcase-app-client` for Client ID. Do not change any other fields.
+.. Enter `{user-username}-frontend` for Client ID. Do not change any other fields.
 .. Save the client. You should see the *Settings* page of the client.
-.. Change `Valid Redirect URIs` to '{route-ionic-showcase-server-host}*'
-.. Change `Web Origins` to '*'
-.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file.
+.. Change `Valid Redirect URIs` to `{route-ionic-showcase-server-host}*`
+.. Change `Web Origins` to `*`
+.. Click on the *Save* button
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content displayed or use the `Download` button to save the configuration file.
 
-Next we need to update the configuration of the frontend app to secure it:
+. Update the configuration of the frontend app to secure it:
+.. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+.. Select the config map that is called `webapp-config`, and edit it by selecting `Edit` under the `Actions` button.
+.. Add a new `auth` section to the config map by pasting the content that was copied in the previous step.
+.. Rename the `auth-server-url` attribute to `url` and the `resource` attribute to `clientId`.
+.. Save it
 
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
-. Select the config map that is called `webapp-config`, and edit it.
-. Add a new `auth` section by pasting the content that was copied in the previous step.
-.. You should then replace `auth-server-url` to `url` and `resource` to `clientId`.
-. The content of the config map should look as follows:
-+
----
-    window.showcaseConfig = {
-      "backend": {
-        "serverUrl": "/graphql",
-        "wsServerUrl": ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql"
-      },
-      "auth": {
-        "realm": "<your realm>",
-        "url": "https://your-server/auth",
-        "clientId": "<your-client>"
-      }
-    };
----
-+
-. Save it and wait for the app to be re-deployed.
+[type=verification]
+****
+Does the content of the config map look as follows:
+[subs="attributes"]
+----
+   window.showcaseConfig = {
+     "backend": {
+       "serverUrl": "/graphql",
+       "wsServerUrl": ((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.hostname + "/graphql"
+     },
+     "auth": {
+       "realm": "walkthroughs",
+    	 "url": " {user-sso-url}/auth",
+   	   "ssl-required": "none",
+   	   "clientId": "{user-username}-frontend",
+   	   "public-client": true,
+   	   "confidential-port": 0
+     }
+   };
+----
+****
+
+[type=verificationFail]
+****
+Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
+****
+[time=10]
 
 === Configure and protect the backend app
 
-. Login to the realm in the {customer-sso-name}.
+. Login to the realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"].
 . Create a new client for the backend:
 .. Choose *Clients* under *Configure* in the menu.
 .. Click on the *Create* button on the top-right corner to start creating a new client.
-.. Enter `showcase-app-server` for Client ID.  Do not change the rest of the fields.
+.. Enter `{user-username}-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
-.. Change the `Access Type` to `bearer-only` and save again.
-.. Click on the *Installation* tab, and select `OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file to a directory on the computer.
+.. Change the `Access Type` to `bearer-only`
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the `keycloak.json` configuration file.
 
-In order to use the application, we also need to create a few users so that we can login:
+In order to use the application, we also need to create some users so that we can login:
 
 . Select *Users* on the left menu, and click on *View all users*.
 . Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
 . Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
+. Click *Reset Password*
 
-At last, we will update the backend to use the downloaded configuration file:
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+Now, we will update the backend to use the downloaded configuration file:
+
+. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console]
+
 . Click *Create Config Map*.
 . When prompted for *Name*, enter:
 +
 ----
 showcase-server-idm-config
 ----
-.. When prompted for *Key*, enter:
+
+. When prompted for *Key*, enter:
 +
 ----
 keycloak.json
 ----
-.. For *Value*, click *Browse* and load the `keycloak.json` file that you downloaded previously.
-.. Click *Create*. The config map object is created.
+. For *Value*, click *Browse* and load the json file that you downloaded previously.
+. Click *Create*. The config map object is created.
 
-.. Choose *Deployments* from the *Applications* menu.
+. Choose *Deployments* from the *Applications* menu.
 
-.. Select the deployment config for `ionic-showcase-server`.
+. Select the deployment config for `ionic-showcase-server`.
 
-.. Click on the *Configuration* tab, and scroll to the *Volumes* section.
+. Click on the *Configuration* tab, and scroll to the *Volumes* section.
 
-.. Click on the *Add Config Files* option at the bottom of the section.
+. Click on the *Add Config Files* option at the bottom of the section.
 
-.. Choose the `showcase-server-idm-config` config map as the *Source*.
-.. Set the value for *Mount Path* to:
+. Choose the `showcase-server-idm-config` config map as the *Source*.
+. Set the value for *Mount Path* to:
 +
 ----
 /tmp/keycloak
 ----
 
-.. Click *Add* to trigger a new deployment.
+. Click *Add* to trigger a new deployment.
 
-.. Click the *Environment* tab and click *Add Value*.
-... Set Name to:
+. Click the *Environment* tab and click *Add Value*.
+. Set Name to:
 +
 ----
 KEYCLOAK_CONFIG
 ----
-... Set Value to:
+. Set Value to:
 +
 ----
 /tmp/keycloak/keycloak.json
 ----
 +
+. Click *Save*
+
 Wait for the deployment to complete and the showcase data sync server is running.
 
 [type=verification]
@@ -246,6 +263,11 @@ Verify that you followed each step in the procedure above.  If you are still hav
 
 To explore data sync features, you should run multiple instances of the showcase app using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
+
+To get the url of your app:
+
+. Navigate to the link:{route-ionic-showcase-server-host}[Data Sync user interface]
+. Click on the `Hostname` of the ionic-showcase-server
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
