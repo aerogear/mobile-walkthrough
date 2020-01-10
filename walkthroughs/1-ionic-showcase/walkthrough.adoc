@@ -140,7 +140,7 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 .. Change `Valid Redirect URIs` to `{route-ionic-showcase-server-host}*`
 .. Change `Web Origins` to `*`
 .. Click on the *Save* button
-.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file.
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Copy the content displayed or use the `Download` button to save the configuration file.
 
 Next we need to update the configuration of the frontend app to secure it:
 
