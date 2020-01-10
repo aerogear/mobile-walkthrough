@@ -132,7 +132,6 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 
 === Configure and protect the frontend app
 
-. Make sure you have access to a realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"]. If you do not, you can ask your customer-admin user to create one for you. 
 . Login to the realm in the link:{sso-realm-url}[{customer-sso-name}, window="_blank"].
 . Create a new client for the frontend app:
 .. Choose *Clients* under *Configure* in the menu on the left of the screen.
@@ -203,48 +202,49 @@ Now, we will update the backend to use the downloaded configuration file:
 
 . Click *Create Config Map*.
 . When prompted for *Name*, enter:
-
++
 ----
 showcase-server-idm-config
 ----
-.. When prompted for *Key*, enter:
+
+. When prompted for *Key*, enter:
 +
 ----
 keycloak.json
 ----
-.. For *Value*, click *Browse* and load the json file that you downloaded previously.
-.. Click *Create*. The config map object is created.
+. For *Value*, click *Browse* and load the json file that you downloaded previously.
+. Click *Create*. The config map object is created.
 
-.. Choose *Deployments* from the *Applications* menu.
+. Choose *Deployments* from the *Applications* menu.
 
-.. Select the deployment config for `ionic-showcase-server`.
+. Select the deployment config for `ionic-showcase-server`.
 
-.. Click on the *Configuration* tab, and scroll to the *Volumes* section.
+. Click on the *Configuration* tab, and scroll to the *Volumes* section.
 
-.. Click on the *Add Config Files* option at the bottom of the section.
+. Click on the *Add Config Files* option at the bottom of the section.
 
-.. Choose the `showcase-server-idm-config` config map as the *Source*.
-.. Set the value for *Mount Path* to:
+. Choose the `showcase-server-idm-config` config map as the *Source*.
+. Set the value for *Mount Path* to:
 +
 ----
 /tmp/keycloak
 ----
 
-.. Click *Add* to trigger a new deployment.
+. Click *Add* to trigger a new deployment.
 
-.. Click the *Environment* tab and click *Add Value*.
-... Set Name to:
+. Click the *Environment* tab and click *Add Value*.
+. Set Name to:
 +
 ----
 KEYCLOAK_CONFIG
 ----
-... Set Value to:
+. Set Value to:
 +
 ----
 /tmp/keycloak/keycloak.json
 ----
 +
-.. Click *Save*
+. Click *Save*
 
 Wait for the deployment to complete and the showcase data sync server is running.
 
@@ -266,7 +266,7 @@ For example, use the browser on your mobile device as well as using the browser 
 
 To get the url of your app:
 
-. Navigate to the {openshift-host}/console/project/{walkthrough-namespace}/browse/routes[Routes page of the OpenShift console]
+. Navigate to the link:{route-ionic-showcase-server-host}[Data Sync user interface]
 . Click on the `Hostname` of the ionic-showcase-server
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
