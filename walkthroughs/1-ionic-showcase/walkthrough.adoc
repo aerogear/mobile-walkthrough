@@ -152,7 +152,6 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 [type=verification]
 ****
 Does the content of the config map look as follows:
-****
 [subs="attributes"]
 ----
    window.showcaseConfig = {
@@ -170,6 +169,7 @@ Does the content of the config map look as follows:
      }
    };
 ----
+****
 
 [type=verificationFail]
 ****
