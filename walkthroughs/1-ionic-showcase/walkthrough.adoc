@@ -150,6 +150,7 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 [type=verification]
 ****
 Does the content of the config map look as follows:
+****
 [subs="attributes"]
 ----
    window.showcaseConfig = {
@@ -167,12 +168,12 @@ Does the content of the config map look as follows:
      }
    };
 ----
-****
 
 [type=verificationFail]
 ****
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
+[time=10]
 
 Save it and wait for the app to be re-deployed.
 
