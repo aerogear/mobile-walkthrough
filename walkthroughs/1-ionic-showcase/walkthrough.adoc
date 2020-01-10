@@ -147,7 +147,7 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 .. Select the config map that is called `webapp-config`, and edit it by selecting `Edit` under the `Actions` button.
 .. Add a new `auth` section to the config map by pasting the content that was copied in the previous step.
 .. Rename the `auth-server-url` attribute to `url` and the `resource` attribute to `clientId`.
-.. Save it and wait for the app to be re-deployed.
+.. Save it
 
 [type=verification]
 ****
@@ -185,17 +185,20 @@ Verify that you followed each step in the procedure above.  If you are still hav
 .. Click on the *Create* button on the top-right corner to start creating a new client.
 .. Enter `{user-username}-server` for Client ID.  Do not change the rest of the fields.
 .. Save the client. You should see the *Settings* page of the client.
-.. Change the `Access Type` to `bearer-only` and save again.
-.. Click on the *Installation* tab, and select `OIDC JSON` format. Copy the content or use the `Download` button to save the configuration file to a directory on the computer.
+.. Change the `Access Type` to `bearer-only`
+.. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the configuration file to a directory on the computer.
 
-In order to use the application, we also need to create a few users so that we can login:
+In order to use the application, we also need to create some users so that we can login:
 
 . Select *Users* on the left menu, and click on *View all users*.
 . Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
 . Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
+. Click *Reset Password*
 
 Now, we will update the backend to use the downloaded configuration file:
+
 . Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console].
+
 . Click *Create Config Map*.
 . When prompted for *Name*, enter:
 
@@ -207,7 +210,7 @@ showcase-server-idm-config
 ----
 keycloak.json
 ----
-.. For *Value*, click *Browse* and load the `keycloak.json` file that you downloaded previously.
+.. For *Value*, click *Browse* and load the json file that you downloaded previously.
 .. Click *Create*. The config map object is created.
 
 .. Choose *Deployments* from the *Applications* menu.
@@ -239,6 +242,8 @@ KEYCLOAK_CONFIG
 /tmp/keycloak/keycloak.json
 ----
 +
+.. Click *Save*
+
 Wait for the deployment to complete and the showcase data sync server is running.
 
 [type=verification]
