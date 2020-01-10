@@ -147,6 +147,8 @@ In this task, we will protect both the frontend and the backend of the {data-syn
 .. Select the config map that is called `webapp-config`, and edit it by selecting `Edit` under the `Actions` button.
 .. Add a new `auth` section to the config map by pasting the content that was copied in the previous step.
 .. Rename the `auth-server-url` attribute to `url` and the `resource` attribute to `clientId`.
+.. Save it and wait for the app to be re-deployed.
+
 [type=verification]
 ****
 Does the content of the config map look as follows:
@@ -174,8 +176,6 @@ Does the content of the config map look as follows:
 Verify that you followed each step in the procedure above.  If you are still having issues, contact your administrator.
 ****
 [time=10]
-
-Save it and wait for the app to be re-deployed.
 
 === Configure and protect the backend app
 
