@@ -6,7 +6,7 @@
 :sso-realm-url: {user-sso-url}/auth/admin/walkthroughs/console/index.html
 :shared-realm-username: walkthroughs
 
-= Adding Data Sync to your Application with GraphQL
+= Adding Data Sync to your application with GraphQL
 
 Data Sync is a framework that helps developers build applications that can perform realtime data synchronization with GraphQL.
  
@@ -37,7 +37,7 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 :sectnums:
 
 [time=10]
-== Deploying the {data-sync-showcase-app}
+== Deploying the Data Sync showcase application
 
 . Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/overview[project console, window="_blank"] in OpenShift.
 . Click on the *Browse Catalog* button.
@@ -104,7 +104,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=5]
-== Access the client app in a browser
+== Accessing the client app in a browser
 
 The {data-sync-showcase-app} demonstrates the key capabilities provided by the {data-sync-name} framework.
 It can be run either as a hybrid mobile application, or a Progressive Web App (PWA).
@@ -127,11 +127,11 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=15]
-== Protect the {data-sync-showcase-app} using the Red Hat SSO
+== Protecting the Data Sync showcase application using Red Hat SSO
 
 In this task, we will protect both the frontend and the backend of the {data-sync-showcase-app} with the {customer-sso-name}.
 
-=== Configure and protect the frontend app
+=== Configuring and protecting the frontend app
 
 . Navigate to the link:{sso-realm-url}[SSO Realm, window="_blank"].
 . Enter the username `{shared-realm-username}` and password `password` if prompted.
@@ -180,7 +180,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 [time=10]
 
-=== Configure and protect the backend app
+=== Configuring and protecting the backend app
 
 . Navigate to the link:{sso-realm-url}[SSO Realm, window="_blank"].
 . Enter the username `{shared-realm-username}` and password `password` if prompted.
@@ -193,64 +193,68 @@ Verify that you followed each step in the procedure above.  If you are still hav
 .. Click *Save*.
 .. Click on the *Installation* tab, and select `Keycloak OIDC JSON` format. Use the `Download` button to save the `keycloak.json` configuration file.
 
-In order to use the application, we also need to create some users so that we can login:
+. Create users for testing:
 
-. Select *Users* on the left menu, and click on *View all users*.
-. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
-. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
-. Click *Reset Password*
+.. Select *Users* on the left menu, and click on *View all users*.
+.. Click on *Add user* to create a new user. Pick a username you like for the *Username* field and click *Save*.
+.. Navigate to `Credentials` tab and set a password for this user. Set `Temporary` option to `OFF`.
+.. Click *Reset Password*
 
-Now, we will update the backend to use the downloaded configuration file:
+. Update the backend to use the downloaded configuration file:
 
-. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console]
+.. Navigate to the link:{openshift-host}/console/project/{walkthrough-namespace}/browse/config-maps[Config Maps page of the OpenShift console]
 
-. Click *Create Config Map*.
-. When prompted for *Name*, enter:
+.. Click *Create Config Map*.
+
+.. When prompted for *Name*, enter:
 +
 ----
 showcase-server-idm-config
 ----
 
-. When prompted for *Key*, enter:
+.. When prompted for *Key*, enter:
 +
 ----
 keycloak.json
 ----
-. For *Value*, click *Browse* and load the json file that you downloaded previously.
-. Click *Create*. The config map object is created.
+.. For *Value*, click *Browse* and load the json file that you downloaded previously.
 
-. Choose *Deployments* from the *Applications* menu.
+.. Click *Create*. The config map object is created.
 
-. Select the deployment config for `ionic-showcase-server`.
+.. Choose *Deployments* from the *Applications* menu.
 
-. Click on the *Configuration* tab, and scroll to the *Volumes* section.
+.. Select the deployment config for `ionic-showcase-server`.
 
-. Click on the *Add Config Files* option at the bottom of the section.
+.. Click on the *Configuration* tab, and scroll to the *Volumes* section.
 
-. Choose the `showcase-server-idm-config` config map as the *Source*.
-. Set the value for *Mount Path* to:
+.. Click on the *Add Config Files* option at the bottom of the section.
+
+.. Choose the `showcase-server-idm-config` config map as the *Source*.
+
+.. Set the value for *Mount Path* to:
 +
 ----
 /tmp/keycloak
 ----
 
-. Click *Add* to trigger a new deployment.
+.. Click *Add* to trigger a new deployment.
 
-. Click the *Environment* tab and click *Add Value*.
-. Set Name to:
+.. Click the *Environment* tab and click *Add Value*.
+
+.. Set Name to:
 +
 ----
 KEYCLOAK_CONFIG
 ----
-. Set Value to:
+
+.. Set Value to:
 +
 ----
 /tmp/keycloak/keycloak.json
 ----
-+
-. Click *Save*
 
-Wait for the deployment to complete and the showcase data sync server is running.
+.. Click *Save*
+
 
 [type=verification]
 ****
@@ -264,7 +268,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 [time=10]
-== Exploring data sync features using the {data-sync-showcase-app}
+== Exploring data sync features using the Data Sync showcase application
 
 To explore data sync features, you should run multiple instances of the {data-sync-showcase-app} using different browsers.
 For example, use the browser on your mobile device as well as using the browser on your laptop.
@@ -275,7 +279,7 @@ To get the url of your app:
 
 image::images/showcase.png[showcase, role="integr8ly-img-responsive"]
 
-=== Real-time sync
+=== Exploring real-time sync
 
 . On your laptop:
 .. Select *Manage Tasks*.
@@ -301,7 +305,7 @@ Verify that you followed each step in the procedure above.  If you are still hav
 ****
 
 
-=== Offline support
+=== Exploring offline support
 
 . On your mobile device:
 .. Log into the {data-sync-showcase-app}.
