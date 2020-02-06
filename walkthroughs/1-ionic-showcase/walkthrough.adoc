@@ -34,7 +34,45 @@ image::images/arch.png[architecture, role="integr8ly-img-responsive"]
 * link:https://access.redhat.com/documentation/en-us/red_hat_managed_integration/1/html-single/developing_a_data_sync_app/index[Getting Started with {data-sync-name}, window="_blank"]
 ****
 
+[type=walkthroughResource,serviceName=codeready]
+.CodeReady Workspaces
+****
+* link:{che-url}[Console, window="_blank"]
+* link:https://developers.redhat.com/products/codeready-workspaces/overview/[Overview, window="_blank"]
+* link:https://access.redhat.com/documentation/en-us/red_hat_codeready_workspaces_for_openshift/1.0.0/[Documentation, window="_blank"]
+****
+
+
 :sectnums:
+
+[time=10]
+== Build and run the mobile showcase app in a browser
+
+The showcase app demonstrates the key capabilities provided by {mobile-services-name}.
+It can run either as a hybrid mobile application, or a Progressive Web App (PWA).
+
+In this task, you build a PWA and run it in a browser.
+
+. Login to link:{che-url}[CodeReady Console, window="_blank"].
+. Download this link:https://raw.githubusercontent.com/aerogear/ionic-showcase/master/.factory.json[Showcase template JSON file, window="_blank"].
+. Select *Factories* from the left hand menu.
+. Click *Create Factory* if prompted.
+. Enter the following as the *Name*:
++
+----
+showcase-app
+----
+. In the *Source* section, select the *Config* tab.
+
+. Click *Upload File* and upload the file you downloaded in step 2.
+
+. Select *Create*.
+This creates a new CodeReady workspace named `ionic-showcase`.
+
+. Click *OPEN* to navigate to the `ionic-showcase` workspace.
+Initializing and starting the workspace can take a few minutes.
+
+// TODO this section bellow will be oudated
 
 [time=10]
 == Deploying the Data Sync showcase application
