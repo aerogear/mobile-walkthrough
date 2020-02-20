@@ -1,4 +1,4 @@
-# mobile-walkthrough
+# mobile-walkthrough for OpenShift 3.x
 
 AeroGear Data Sync Walkthrough using the AeroGear Ionic Showcase application and Keycloak.
 
