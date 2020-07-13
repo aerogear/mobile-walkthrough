@@ -2,8 +2,6 @@
 :integreatly-name: Managed Integration
 :data-sync-name: Data Sync
 :data-sync-showcase-app: Data Sync showcase application
-:customer-sso-name: Customer Application SSO instance
-:sso-realm-url: {user-sso-url}/auth/admin/walkthroughs/console/index.html
 :shared-realm-username: walkthroughs
 
 = Adding Data Sync to your application with GraphQL
@@ -13,7 +11,6 @@ Data Sync is a framework that helps developers build applications that can perfo
 This solution pattern will show you how to:
 
 * Configure and run the link:{showcase-app-link}[{data-sync-showcase-app}] on OpenShift.
-* Protect the application's frontend and backend using Red Hat SSO.
 * Explore all the capabilities provided by {data-sync-name}.
 
 The following diagram shows the architecture of the {data-sync-showcase-app}:
